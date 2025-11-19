@@ -1,0 +1,101 @@
+id_usuario,nombre,sexo,edad,ocupacion,personalidad,p_actividad
+fb2bcf87-afca-48a9-8558-2f5d52525d79,Guadalupe,M,22,Estudiante,Extrovertido,0.86
+94298fb2-3576-44e9-8b3d-f43397d13299,Juan José,M,60,Empleado,Extrovertido,0.61
+3777b43c-3e87-4a92-b06e-ce3cafdf230d,Benigno,M,65,Desempleado,Extrovertido,0.74
+bcf17912-c46b-45dd-ab4c-3c6fd8f4b90e,Maximiliano,F,31,Jubilado,Ansioso,0.65
+1d207c00-e6e3-490c-b009-4b7caf1c26a3,Rico,F,58,Freelance,Ansioso,0.51
+eb0c2205-705d-4ac0-8968-ee0f0dc79f11,Amancio,M,57,Desempleado,Optimista,0.84
+b77c6740-9091-48a0-85f3-2f5280477189,Porfirio,F,31,Freelance,Ansioso,0.66
+ba624c5b-f887-4eb3-aa52-430d9973163c,Maximiano,M,64,Jubilado,Empático,0.62
+7310de46-b23e-4ec9-829f-3dc45f19923c,Teresita,M,62,Empleado,Extrovertido,0.78
+c317cb93-63b3-41e9-aee4-2922fd903dc0,Gil,F,48,Desempleado,Ansioso,0.64
+c3723274-ded6-4139-acef-02876d1bb483,Gerónimo,F,62,Desempleado,Melancólico,0.55
+6cc16c5f-95cb-4c2f-96d2-64ae6a032288,Modesta,M,18,Empleado,Introvertido,0.62
+3dd1a3e6-2f84-4eb5-b2c6-d7a6102799d3,Sabas,M,69,Freelance,Melancólico,0.47
+5e1726e3-3318-431b-a69a-212833605f39,Seve,F,45,Freelance,Optimista,0.79
+7f69fc8a-5a75-4eac-affe-89a9b1541270,Noelia,M,44,Desempleado,Optimista,0.87
+e140898d-7c0a-428a-b086-a68f898229b2,Alba,M,19,Freelance,Ansioso,0.66
+3c0bb286-8ddb-483a-878d-b7e62e58d724,Dimas,F,60,Desempleado,Ansioso,0.88
+e33ba44e-bda8-4d3a-9e54-def9bc1b6a33,Germán,F,70,Estudiante,Melancólico,0.5
+b8b75319-15d9-421e-aafe-e93ff2560cb9,Lucho,M,48,Freelance,Introvertido,0.87
+d99f119b-49b6-4888-8397-a346aec197c5,Jose Francisco,F,48,Empleado,Empático,0.5
+3371b86b-01f1-44e4-bbc4-378ee9356059,Prudencio,F,31,Jubilado,Introvertido,0.88
+7048538a-3c83-47e6-9066-6ef342aae9bf,María Belén,F,33,Desempleado,Introvertido,0.83
+18c43535-c0d8-45e8-90b9-543d192a7b1b,Mirta,F,39,Empleado,Introvertido,0.56
+b5dfa410-326a-4e03-898f-12ced544f8d0,Máxima,F,34,Freelance,Empático,0.57
+4fd400cf-a369-4f7d-bbfa-7e9b0f83a7fe,Verónica,F,62,Estudiante,Introvertido,0.78
+509c4017-2d1f-4e38-994b-bab24cc199e9,Áurea,M,70,Estudiante,Melancólico,0.4
+b8452d9b-4d96-4628-bc7c-cd8584357129,Rosario,F,46,Estudiante,Extrovertido,0.88
+9bda385a-0f5c-4941-9dbf-7a67845ad272,Galo,F,68,Jubilado,Extrovertido,0.69
+3180d4a4-4c79-485c-96fe-43e664924828,Fabián,F,61,Desempleado,Melancólico,0.54
+2b3e796d-172b-4cf4-9ea1-a273b38a4c4c,Ángel,F,54,Jubilado,Ansioso,0.8
+79d3b8e4-4044-4137-8910-117f91cd0716,Rico,M,67,Freelance,Empático,0.84
+0b653460-f749-414b-96b5-87611258083f,Sabina,M,45,Desempleado,Empático,0.47
+77a530f0-342a-4aa9-a8a5-72798c514f0d,Miguela,M,67,Empleado,Optimista,0.87
+c03abbc1-2878-4605-88e3-3b7ddd9a09c5,Francisco Javier,M,42,Empleado,Introvertido,0.65
+5acacfed-76fa-4b25-bb45-d69a7ec89256,Custodio,M,69,Empleado,Melancólico,0.57
+93a5083c-c235-4b1a-bb11-6789196aedf3,Susana,F,37,Desempleado,Ansioso,0.51
+e8045adc-78e4-422c-9409-81ed2eca9bbb,Maximiliano,M,36,Estudiante,Ansioso,0.74
+fe272703-b5d3-4e93-b999-17334d6c171c,Concepción,F,26,Desempleado,Ansioso,0.71
+991d68a5-536c-470a-98ec-481f5fce2229,Rocío,F,65,Empleado,Optimista,0.51
+aa77f785-66c3-49e2-b82b-2bed6295ee2e,Filomena,F,57,Estudiante,Melancólico,0.56
+7aa19bb2-649e-4497-9026-cd4ec938a0d5,Rafa,M,61,Desempleado,Extrovertido,0.55
+ff37760b-d83c-4eb0-b2c8-137e70b42c92,Carla,M,56,Jubilado,Optimista,0.6
+df49ded0-68fa-4d01-879e-7f24c88af96f,Iván,M,25,Estudiante,Empático,0.83
+9693b79e-ac77-4e02-b784-17e6286903a4,Chuy,F,54,Empleado,Introvertido,0.55
+9331ee95-2653-42c9-883b-16ab70009d60,Gaspar,F,25,Empleado,Introvertido,0.71
+0d7fea48-1849-43d0-b558-b3f22d372d1b,José Antonio,F,33,Desempleado,Extrovertido,0.84
+83adaed3-f7fc-44f5-9142-80a385a1b400,Elpidio,M,49,Estudiante,Melancólico,0.9
+667d3451-e3d6-4f63-89d6-1dc20e1276cf,Epifanio,M,33,Jubilado,Melancólico,0.72
+da4d6ef3-27da-4464-b7fd-c0b5be1c3ce9,Joel,M,67,Empleado,Ansioso,0.8
+5c0c9428-bf85-4651-9fda-3070448c5693,Benjamín,M,31,Freelance,Ansioso,0.86
+0a00414b-8bb1-471e-a3a2-16a2bdea4ac3,Cándido,M,47,Empleado,Extrovertido,0.7
+2d00046c-9dfd-49fd-ba10-8c7d1ed58f2b,Máximo,F,20,Desempleado,Ansioso,0.48
+057ac21a-45b5-4023-8e0e-a93c3f175728,Irene,M,51,Jubilado,Empático,0.86
+7cff5d9f-b18a-404b-a309-28f686dea914,Gabriela,M,49,Estudiante,Introvertido,0.66
+74bb2fdc-41db-4a92-862d-1f164d33ed90,Yaiza,F,50,Desempleado,Melancólico,0.86
+5a486ea8-89b4-43e2-b9de-869392f59717,Pío,M,50,Empleado,Melancólico,0.6
+52a0ec65-62cb-45ba-8b1e-c2cae1506169,Rolando,F,41,Estudiante,Ansioso,0.65
+cefbb6f1-157e-47a2-955c-d263956b2e9c,Edgardo,F,68,Estudiante,Optimista,0.46
+009addc3-1810-4ec0-9bdd-0579556db223,Feliciano,M,54,Empleado,Empático,0.47
+1057a1b2-5abd-4d02-89a8-492190a1f00e,Brígida,F,23,Desempleado,Empático,0.66
+94a63cf6-25d4-4fe9-aeeb-a7cf40e06d9c,Manu,M,24,Empleado,Melancólico,0.6
+c70751aa-88c6-4014-a2e9-2e3dc2b76878,Morena,M,32,Empleado,Optimista,0.79
+e02f12b2-2089-40ff-be14-675c8d4f19b2,Azahara,F,62,Empleado,Introvertido,0.61
+0a1a187f-4d7e-4186-b348-1d986aa1d4f5,Eusebio,F,29,Freelance,Melancólico,0.56
+0d3bb223-0caf-4427-b796-3d3e9fedfcd9,Ulises,F,61,Desempleado,Extrovertido,0.61
+f2d8f942-8c75-4e6f-879b-59ed4338d4bc,Pastora,F,35,Estudiante,Extrovertido,0.89
+6d684107-aeee-445a-b4d4-6ee2e403a705,Rubén,F,50,Empleado,Ansioso,0.67
+49d74685-dca4-4540-bc7d-196b3627550f,Delfina,M,46,Desempleado,Ansioso,0.89
+173168ad-03eb-4c56-8f04-e636b18b55bb,Cosme,M,28,Jubilado,Extrovertido,0.61
+2fd69920-2fef-43f8-ab38-70c72309b832,Nazario,F,34,Jubilado,Optimista,0.79
+565a4661-9e5f-401c-a4f9-701107e3fbe0,Francisco Jose,M,36,Estudiante,Introvertido,0.6
+911b10b4-66f5-4f15-ab1e-2c34898760aa,Julio César,M,67,Desempleado,Extrovertido,0.57
+e11beac1-d984-4c6a-8c52-2e5cc760e323,Josefa,M,18,Empleado,Ansioso,0.59
+5283b1ed-6c73-48cd-9d90-eed4b0b0fa7d,Donato,F,33,Jubilado,Ansioso,0.87
+c5c9377e-7108-455a-a4a5-ef6e7bf5f1c7,Manola,F,21,Jubilado,Ansioso,0.75
+a6625c08-12fb-435d-831b-167aff58ac0b,Aurelia,M,41,Freelance,Melancólico,0.56
+9378b8d4-3b68-47c3-81f9-07f3a567a096,María Ángeles,F,48,Freelance,Extrovertido,0.6
+55ef64a1-e046-4fe2-9fd4-563114aa746f,Samuel,F,37,Empleado,Melancólico,0.47
+c2847133-129f-4f4a-87ed-2a4fb4bc8dc2,Alma,M,56,Freelance,Ansioso,0.88
+21cd336c-7260-4607-9f68-4b4fe1822ac9,Nicolasa,F,38,Jubilado,Optimista,0.52
+f16d00c0-74fb-463e-8747-2e5b06d7a2fd,Brunilda,F,46,Freelance,Melancólico,0.78
+55500d65-fbde-4222-92f1-d869f960659d,Dani,M,61,Empleado,Optimista,0.64
+a9b0dbea-605d-444a-802b-71ccb6898f2f,Patricia,M,39,Empleado,Empático,0.65
+11d3a995-79e6-4373-8517-14d65d9b46c0,Adalberto,F,21,Freelance,Ansioso,0.77
+25d3aea5-6809-447e-bbc0-b81293ef42fb,María Belén,M,46,Desempleado,Empático,0.62
+7b5452d6-51eb-4bdc-b0d0-4d96fcb01372,Bruno,M,49,Estudiante,Melancólico,0.52
+5fcbc243-52f2-4a82-b340-e601c6bc865c,Victor,F,28,Estudiante,Empático,0.5
+8275c3c0-0e09-4b5e-a8e3-02060b2df422,Onofre,M,55,Estudiante,Melancólico,0.41
+8ff5029d-8ffe-447b-b57b-b542143d5834,Hernando,M,21,Empleado,Empático,0.65
+b7cb0522-1576-4d7e-9806-57123bbd9478,Fidel,M,60,Jubilado,Optimista,0.5
+a7fc499b-0bc0-4b12-87a9-5a3cd67c8ec4,Calixto,M,19,Freelance,Extrovertido,0.6
+519d4bed-9353-414f-97d0-36f4b2798b5f,Eufemia,M,67,Empleado,Empático,0.54
+67a3bf1f-a533-4c1c-89f1-8130a83cb01c,Florina,F,50,Desempleado,Extrovertido,0.55
+b480b209-e541-4525-abe5-a66fc12c1d8f,Evita,F,18,Desempleado,Melancólico,0.65
+8bf703a7-dd25-4370-be31-2848c0751e73,Esther,F,45,Desempleado,Optimista,0.61
+a253d323-e451-401a-9c92-490c12c3440f,Plácido,M,34,Jubilado,Introvertido,0.65
+93afa09b-3a75-4744-be65-870afcd5db60,Luís,M,24,Jubilado,Introvertido,0.59
+f1269178-c952-4900-9a2b-27e27742e7db,Blas,M,62,Desempleado,Melancólico,0.47
+f1ffd70a-3afb-4520-8411-ea30b55eec1a,Felipe,M,19,Desempleado,Introvertido,0.67
+9320fb89-0b3d-4763-aec1-917e57d2d641,Teodora,F,36,Estudiante,Extrovertido,0.43
