@@ -1,70 +1,65 @@
-from transformers import pipeline, AutoTokenizer, AutoModel
+from transformers import AutoTokenizer, AutoModel
 import torch
 
 print("=" * 70)
-print("🎭 PRUEBA DE ANÁLISIS DE SENTIMIENTOS EN ESPAÑOL")
+print("🎭 PRUEBA DE ANÁLISIS DE SENTIMIENTOS CON ROBERTA-BASE (INGLÉS)")
 print("=" * 70)
 
-# ============================================================================
-# OPCIÓN B: Mostrar que BETO base solo genera embeddings
-# ============================================================================
-def test_with_beto_base():
+def test_with_roberta_base():
     """
-    Demuestra que BETO base solo genera embeddings, no clasificaciones.
+    Demuestra que RoBERTa base solo genera embeddings, no clasificaciones.
     """
     print("\n" + "=" * 70)
-    print("🔍 PROBANDO CON BETO BASE (Tu modelo descargado)")
+    print("🔍 PROBANDO CON ROBERTA-BASE (Tu modelo descargado)")
     print("=" * 70)
     
     try:
-        base_path = "../model-training/download-model/bert-base-spanish"
+        base_path = "../model-training/download-model/roberta-base-english"
         
         print(f"\n📂 Cargando modelo local: {base_path}")
         tokenizer = AutoTokenizer.from_pretrained(base_path)
         model = AutoModel.from_pretrained(f"{base_path}/base")
         
-        print("✅ Modelo BETO base cargado\n")
+        print("✅ Modelo RoBERTa-base cargado\n")
         
-        # Frase de prueba
-        text = "Hoy me siento muy feliz"
+        # Frase de prueba en inglés
+        text = "Today I feel very happy"
         print(f"📝 Frase de prueba: \"{text}\"\n")
         
-        # Tokenizar y procesar
-        inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+        # Tokenizar y obtener embeddings
+        inputs = tokenizer(text, return_tensors="pt")
+        outputs = model(**inputs)
         
-        print("🔢 Tokens generados:")
-        tokens = tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])
-        print(f"   {tokens}\n")
+        # RoBERTa base genera embeddings (no clasificaciones)
+        embeddings = outputs.last_hidden_state
         
-        # Obtener embeddings
-        with torch.no_grad():
-            outputs = model(**inputs)
+        print("🎯 RESULTADOS:")
+        print(f"  ├─ Dimensiones del embedding: {embeddings.shape}")
+        print(f"  ├─ Tokens procesados: {len(inputs['input_ids'][0])}")
+        print(f"  └─ Vector por token: {embeddings.shape[-1]} dimensiones")
         
-        # Formato del output
-        embedding_shape = outputs.last_hidden_state.shape
+        print("\n" + "=" * 70)
+        print("💡 IMPORTANTE:")
+        print("=" * 70)
+        print("✅ RoBERTa-base genera embeddings (representaciones numéricas)")
+        print("❌ NO clasifica sentimientos directamente")
+        print("🎯 Para clasificar 6 emociones, necesitas hacer FINE-TUNING")
+        print("\nEmociones objetivo:")
+        print("  1. joy (alegría)")
+        print("  2. sadness (tristeza)")
+        print("  3. fear (miedo)")
+        print("  4. anger (ira)")
+        print("  5. love (amor)")
+        print("  6. surprise (sorpresa)")
+        print("=" * 70)
         
-        print("📊 Output del modelo:")
-        print(f"   Dimensiones: {embedding_shape}")
-        print(f"   - {embedding_shape[0]} textos")
-        print(f"   - {embedding_shape[1]} tokens")
-        print(f"   - {embedding_shape[2]} dimensiones por token")
-        
-        print("\n⚠️  IMPORTANTE:")
-        print("   Este es solo un EMBEDDING (representación numérica del texto).")
-        print("   NO es una clasificación de sentimiento.")
-        print("\n   Para clasificar sentimientos, necesitas:")
-        print("   1. Fine-tunear BETO con datos etiquetados de sentimientos")
-        print("   2. O usar un modelo ya fine-tuned (como en la Opción A)")
-        
-        return True
-        
+    except FileNotFoundError:
+        print("\n❌ ERROR: No se encontró el modelo RoBERTa")
+        print("💡 Debes descargar el modelo primero:")
+        print("   1. cd model-training/download-model")
+        print("   2. python download_roberta.py\n")
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
-        return False
+        print(f"\n❌ ERROR: {str(e)}\n")
 
-
-# ============================================================================
-# MAIN
-# ============================================================================
 if __name__ == "__main__":
-    test_with_beto_base()
+    test_with_roberta_base()
