@@ -1,9 +1,9 @@
 """
-Script para descargar el modelo BETO (BERT Español) pre-entrenado
+Script para descargar el modelo RoBERTa-base (inglés) pre-entrenado
 y guardarlo localmente en esta carpeta.
 
-Modelo: dccuchile/bert-base-spanish-wwm-cased
-Uso: python download_beto.py
+Modelo: roberta-base
+Uso: python download_roberta.py
 """
 
 from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification
@@ -11,16 +11,16 @@ import os
 from pathlib import Path
 
 # Configuración
-MODEL_NAME = "dccuchile/bert-base-spanish-wwm-cased"
-SAVE_DIR = Path(__file__).parent / "bert-base-spanish"
+MODEL_NAME = "roberta-base"
+SAVE_DIR = Path(__file__).parent / "roberta-base-english"
 
 def download_model():
     """
-    Descarga el modelo BETO y el tokenizer desde Hugging Face Hub
+    Descarga el modelo RoBERTa-base y el tokenizer desde Hugging Face Hub
     y los guarda en la carpeta local.
     """
     print("=" * 60)
-    print("📥 DESCARGANDO MODELO BETO ESPAÑOL")
+    print("📥 DESCARGANDO MODELO ROBERTA-BASE (INGLÉS)")
     print("=" * 60)
     print(f"\n🔍 Modelo: {MODEL_NAME}")
     print(f"💾 Guardando en: {SAVE_DIR.absolute()}\n")
@@ -64,14 +64,14 @@ def download_model():
 from transformers import AutoTokenizer, AutoModel
 
 # Cargar desde la carpeta local
-model_path = "./bert-base-spanish/base"
-tokenizer_path = "./bert-base-spanish"
+model_path = "./roberta-base-english/base"
+tokenizer_path = "./roberta-base-english"
 
 tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
 model = AutoModel.from_pretrained(model_path)
 
-# Ya puedes usar el modelo
-text = "Hoy me siento muy feliz"
+# Ya puedes usar el modelo (frases en inglés)
+text = "Today I feel very happy"
 inputs = tokenizer(text, return_tensors="pt")
 outputs = model(**inputs)
         """)
@@ -98,8 +98,8 @@ def verify_model():
         tokenizer = AutoTokenizer.from_pretrained(SAVE_DIR)
         model = AutoModel.from_pretrained(SAVE_DIR / "base")
         
-        # Test rápido
-        test_text = "Este es un texto de prueba"
+        # Test rápido con texto en inglés
+        test_text = "This is a test sentence"
         inputs = tokenizer(test_text, return_tensors="pt")
         outputs = model(**inputs)
         
