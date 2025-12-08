@@ -12,6 +12,21 @@
 - 📊 **Análisis de embeddings** con modelos transformer
 - 🚀 Preparado para **fine-tuning** de modelos personalizados
 - 🎭 **6 emociones detectables:** joy, sadness, fear, anger, love, surprise
+- 🎮 **Optimizado para RTX 4060** (8GB VRAM)
+
+### 🚀 Inicio Rápido
+
+**¿Primera vez configurando el proyecto en un PC nuevo?**  
+👉 **[Ver guía completa de setup: SETUP_PC_CASA.md](SETUP_PC_CASA.md)**
+
+Esta guía incluye:
+- ✅ Instalación desde cero en Windows
+- ✅ Configuración de Docker, PostgreSQL, DBeaver
+- ✅ Setup de Python con entorno virtual
+- ✅ Configuración de CUDA para RTX 4060
+- ✅ Descarga del modelo RoBERTa
+- ✅ Carga de datos con ETL
+- ✅ Verificación completa del sistema
 
 ---
 
@@ -19,6 +34,7 @@
 
 ```
 MoodJournalAI/
+├── SETUP_PC_CASA.md      # 🆕 Guía completa de setup desde cero
 ├── backend/              # API backend (en desarrollo)
 ├── frontend/             # Interfaz de usuario (en desarrollo)
 ├── data/                 # Datos de muestra
@@ -29,6 +45,10 @@ MoodJournalAI/
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── model-training/       # 🆕 Entrenamiento de modelos ML
+│   ├── data/             # Train/val/test splits
+│   ├── scripts/          # Scripts de entrenamiento
+│   ├── models/           # Modelos entrenados
+│   ├── logs/             # Logs de TensorBoard
 │   ├── download-model/   # Scripts de descarga de modelos
 │   │   ├── download_roberta.py
 │   │   ├── requirements.txt
@@ -53,8 +73,9 @@ MoodJournalAI/
 ### 1️⃣ Requisitos Previos
 
 - **Docker Desktop** (para base de datos)
-- **Python 3.8+** (para modelos de ML)
+- **Python 3.10+** (para modelos de ML)
 - **Git** (para clonar el repositorio)
+- **NVIDIA GPU** (opcional, para entrenamiento rápido)
 
 ### 2️⃣ Entorno Virtual de Python
 
@@ -209,6 +230,7 @@ Este script:
 
 ### Documentación por Módulo
 
+- **[SETUP_PC_CASA.md](SETUP_PC_CASA.md)** - 🆕 Guía completa de setup desde cero
 - **model-training/download-model/README.md** - Guía completa de descarga de RoBERTa
 - **model-training/PLAN_FINETUNING.md** - Plan detallado de fine-tuning
 - **etl/README.md** - Pipeline ETL y carga de datos (próximamente)
@@ -220,6 +242,7 @@ Este script:
 - **NLP:** Hugging Face Transformers, PyTorch, RoBERTa-base
 - **Base de datos:** PostgreSQL
 - **Containerización:** Docker, Docker Compose
+- **GPU:** NVIDIA CUDA (RTX 4060 optimizado)
 - **Backend (futuro):** FastAPI
 - **Frontend (futuro):** React/Next.js
 
