@@ -1,0 +1,106 @@
+import { useState } from 'react';
+import { Send, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const TextInput = ({ onAnalyze, isLoading, showAttention, setShowAttention }) => {
+    const [text, setText] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (text.trim()) {
+            onAnalyze(text);
+        }
+    };
+
+    const examples = [
+        { emotion: 'joy', text: 'I feel so happy and excited today!' },
+        { emotion: 'sadness', text: 'I am feeling really sad and lonely right now' },
+        { emotion: 'fear', text: 'I am terrified about what might happen tomorrow' }
+    ];
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full max-w-4xl mx-auto"
+        >
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="relative">
+                    <textarea
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        placeholder="Write your text in English here... (e.g., I feel amazing today!)"
+                        className="w-full px-6 py-4 text-lg border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all duration-200 shadow-sm hover:shadow-md"
+                        rows="5"
+                        disabled={isLoading}
+                    />
+                    <div className="absolute bottom-4 right-4 text-sm text-gray-400">
+                        {text.length} / 512
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                    <label className="flex items-center space-x-2 cursor-pointer group">
+                        <input
+                            type="checkbox"
+                            checked={showAttention}
+                            onChange={(e) => setShowAttention(e.target.checked)}
+                            className="w-5 h-5 text-purple-600 rounded focus:ring-purple-500"
+                            disabled={isLoading}
+                        />
+                        <span className="text-sm font-medium text-gray-700 group-hover:text-purple-600 transition-colors flex items-center gap-2">
+                            <Sparkles className="w-4 h-4" />
+                            Show Attention Weights
+                        </span>
+                    </label>
+
+                    <motion.button
+                        type="submit"
+                        disabled={!text.trim() || isLoading}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className={`px-8 py-3 rounded-xl font-semibold text-white transition-all duration-200 flex items-center gap-2 shadow-lg ${!text.trim() || isLoading
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : showAttention
+                                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
+                                    : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
+                            }`}
+                    >
+                        {isLoading ? (
+                            <>
+                                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                Analyzing...
+                            </>
+                        ) : (
+                            <>
+                                <Send className="w-5 h-5" />
+                                {showAttention ? 'Analyze with Attention' : 'Analyze Emotion'}
+                            </>
+                        )}
+                    </motion.button>
+                </div>
+            </form>
+
+            {/* Quick Examples */}
+            <div className="mt-6">
+                <p className="text-sm font-medium text-gray-600 mb-3">💡 Quick Examples:</p>
+                <div className="flex flex-wrap gap-2">
+                    {examples.map((example, index) => (
+                        <motion.button
+                            key={index}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setText(example.text)}
+                            className="px-4 py-2 text-sm bg-white border-2 border-gray-200 rounded-lg hover:border-purple-400 hover:text-purple-600 transition-all duration-200 shadow-sm"
+                            disabled={isLoading}
+                        >
+                            {example.text.substring(0, 30)}...
+                        </motion.button>
+                    ))}
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
+export default TextInput;
