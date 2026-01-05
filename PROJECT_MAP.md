@@ -1,98 +1,94 @@
-# Mapa del Proyecto MoodJournalAI 🗺️
+# Mapa del Proyecto MoodJournalAI (Estado Actual) 🗺️
 
-Este documento ofrece una visión detallada de la estructura actual del proyecto, las tecnologías utilizadas y el estado de los diferentes componentes. Ha sido generado para facilitar la reincorporación al desarrollo tras un periodo de inactividad.
+Este documento refleja el estado real del proyecto, donde ya tienes una **aplicación funcional "Full Stack"** capaz de realizar predicciones y visualizar la atención del modelo.
 
-## 🏗️ Estructura del Proyecto
+## 🟢 Estado Actual: Funcional
 
-```text
-MoodJournalAI/
-├── 📂 .venv/                 # Tu entorno virtual de Python (contiene las librerías instaladas).
-├── 📂 backend/               # Código del servidor.
-│   ├── 📂 api/               # API principal construida con FastAPI.
-│   │   ├── 📂 app/           # Lógica de la aplicación.
-│   │   │   ├── 📂 routes/    # Endpoints (ej. predicciones).
-│   │   │   └── ml_service.py # Servicio que carga el modelo de IA.
-│   ├── 📂 web/               # Prototipo rápido de UI.
-│   │   └── streamlit_app.py  # Aplicación Streamlit para probar el modelo sin el frontend completo.
-├── 📂 data/                  # Datos del proyecto.
-│   ├── 📂 finetuning/        # Datasets YA procesados (train.csv, val.csv, test.csv).
-│   ├── entradas.csv          # Dataset original (fuente).
-│   └── usuarios.csv          # Datos de usuarios.
-├── 📂 docker/                # Configuración de contenedores (Base de datos).
-├── 📂 etl/                   # Scripts para Extract-Transform-Load.
-│   └── load_data.py          # Script para poblar la BBDD desde los CSV.
-├── 📂 frontend/              # Interfaz de usuario final (React + Vite).
-├── 📂 model-training/        # Núcleo de Inteligencia Artificial.
-│   ├── 📂 download-model/    # Scripts para descargar el modelo base RoBERTa.
-│   ├── 📂 logs/              # Registros de TensorBoard de entrenamientos previos.
-│   ├── 📂 models/            # Checkpoints guardados.
-│   │   ├── 📂 checkpoints/        # Modelos de entrenamiento completo.
-│   │   └── 📂 checkpoints-frozen/ # Modelos de entrenamiento con capas congeladas.
-│   ├── 📂 results/           # Gráficos y métricas de evaluación.
-│   ├── train.py              # Script principal de entrenamiento.
-│   └── evaluate.py           # Script de evaluación.
-├── 📂 notebooks/             # Scripts de prueba rápida (ej. test_sentiment.py).
-├── docker-compose.yml        # Orquestador para levantar la base de datos PostgreSQL.
-├── SETUP_PC_CASA.md          # Guía de instalación inicial.
-└── README.md                 # Archivo de introducción original.
+A diferencia de un proyecto vacío, actualmente tienes:
+1.  **Frontend (React)**: Una interfaz moderna y animada que permite escribir texto, enviarlo al servidor y ver la emoción predicha y los mapas de atención.
+2.  **Backend (FastAPI)**: Un servidor levantado que recibe estas peticiones y utiliza el modelo de IA para responder.
+3.  **Conexión**: Ambos extremos están conectados. El frontend chequea automáticamente si el backend está online (`/health`).
+
+---
+
+## 🏗️ Estructura Detallada
+
+### 🖥️ Frontend (`/frontend`)
+*Estado: Avanzado / Funcional*
+
+Es una SPA (Single Page Application) construida con React y Vite.
+- **`App.jsx`**: Controlador principal. Gestiona el estado de la API (`online`/`offline`) y orquesta la vista.
+- **`services/api.js`**: Cliente HTTP (Axios) configurado para hablar con `localhost:8000`.
+    - `predictEmotion(text)`: Envía texto simple.
+    - `predictEmotionWithAttention(text)`: Solicita también los pesos de atención (para ver en qué palabras se fija el modelo).
+- **`components/`**:
+    - `TextInput.jsx`: Caja de texto con ejemplos rápidos y toggle para "Attention Weights".
+    - `ResultCard.jsx`: Muestra la emoción ganadora y probabilidades.
+    - `AttentionVisualization.jsx`: Renderiza gráficamente qué palabras pesaron más en la decisión.
+
+### 🔌 Backend (`/backend`)
+*Estado: Funcional / Sirviendo API*
+
+- **`api/app/main.py`**: Punto de entrada. Monta las rutas y CORS.
+- **`api/app/routes/predict.py`**: Define los endpoints `/predict` y `/predict/attention`.
+- **`api/app/ml_service.py`**: Carga el modelo (RoBERTa) en memoria y ejecuta la inferencia real.
+
+### 🧠 Inteligencia Artificial (`/model-training`)
+*Estado: En proceso de mejora (Fine-tuning)*
+
+- Tienes checkpoints de entrenamientos previos en `models/checkpoints`.
+- El sistema actual usa estos modelos (o el base) para las predicciones que ves en el frontend.
+
+---
+
+## 🚀 Cómo volver a "Tu Sesión Anterior"
+
+Para recuperar el entorno donde hacías pruebas en el navegador:
+
+### 1. Levanta el Backend (Cerebro)
+Necesitas una terminal para esto.
+```powershell
+# Activa el entorno (si no lo está)
+.\.venv\Scripts\Activate
+
+# Ve a la carpeta de la API
+cd backend/api
+
+# Lanza el servidor (deja esta terminal abierta)
+uvicorn app.main:app --reload
 ```
+*Debería decirte que está corriendo en `http://127.0.0.1:8000`*.
+
+### 2. Levanta el Frontend (Cara)
+Abre **otra** terminal nueva.
+```powershell
+cd frontend
+
+# Instala dependencias (solo si hace mucho que no tocas nada, por seguridad)
+npm install
+
+# Lanza la web
+npm run dev
+```
+*Abrirá tu navegador en `http://localhost:5173` (o te dará el link)*.
+
+### 3. ¡Prueba!
+Ve a `http://localhost:5173`. Deberías ver:
+- El indicador de **API: Online** (verde) arriba a la derecha.
+- La caja para escribir "I feel..."
+- El botón "Analyze Emotion".
 
 ---
 
-## 🛠️ Tecnologías y Herramientas
+## 📂 Resumen de Archivos Clave
 
-### Backend & AI
-- **FastAPI** (`backend/api`): Framework de API de alto rendimiento. Se encarga de recibir textos del frontend y devolver las emociones detectadas.
-- **Streamlit** (`backend/web`): Herramienta para crear "dashboards" de datos rápidamente. Se usa aquí para testear el modelo visualmente sin depender del desarrollo del frontend de React.
-- **RoBERTa (Hugging Face)**: El "cerebro" del proyecto. Un modelo Transformer pre-entrenado que estamos adaptando (fine-tuning) para detectar 6 emociones específicas.
-- **PyTorch**: La librería de Deep Learning que mueve todo el entrenamiento e inferencia.
-
-### Frontend
-- **React + Vite** (`frontend`): La tecnología elegida para la web final. Rápida y moderna.
-- **Tailwind CSS**: Framework de estilos para diseñar rápido sin salir del HTML.
-
-### Infraestructura
-- **Docker & Docker Compose**: Se usan principalmente para "encapsular" la base de datos PostgreSQL. Esto evita que tengas que instalar y configurar Postgres manualmente en tu Windows.
-- **PostgreSQL**: Donde se guardan las entradas del diario a largo plazo.
+| Archivo | Propósito |
+| -- | -- |
+| `frontend/src/App.jsx` | Lógica visual principal. Si quieres cambiar colores o textos de la web, es aquí. |
+| `backend/api/app/routes/predict.py` | Si quieres cambiar qué devuelve la API (ej. más datos). |
+| `model-training/train.py` | Si decides volver a entrenar el modelo para que detecte mejor las emociones. |
+| `docker-compose.yml` | Base de datos (necesaria si guardas historial, aunque la predicción pura a veces funciona sin ella si solo usa RAM). |
 
 ---
 
-## 🔍 Estado de las Carpetas "Clave"
-Para que sepas dónde te quedaste:
-
-1.  **`model-training/models/`**:
-    *   **Estado**: No está vacía. Contiene carpetas `checkpoints` y `checkpoints-frozen`. Esto indica que **ya has ejecutado entrenamientos anteriormente**. Deberías tener modelos parciales o finales guardados ahí.
-
-2.  **`data/finetuning/`**:
-    *   **Estado**: Contiene `train.csv`, `val.csv` y `test.csv`.
-    *   **Significado**: El script `prepare_dataset.py` ya se ejecutó con éxito. Los datos están listos para ser usados por los scripts de entrenamiento sin necesidad de preprocesarlos de nuevo.
-
-3.  **`backend/api/`**:
-    *   Contiene una estructura con `routes`, `models.py` y `ml_service.py`. Parece que el esqueleto de la API está listo para conectar con el modelo.
-
----
-
-## 🚀 Cómo Retomar el Trabajo
-
-1.  **Activa el entorno**:
-    ```powershell
-    .\.venv\Scripts\Activate
-    ```
-
-2.  **Levanta la Base de Datos**:
-    ```powershell
-    docker-compose up -d
-    ```
-
-3.  **Revisa tus modelos**:
-    Como tienes checkpoints en `model-training/models`, podrías intentar evaluarlos:
-    ```powershell
-    python model-training/evaluate.py
-    ```
-
-4.  **Si quieres probar la web rápida (Streamlit)**:
-    ```powershell
-    streamlit run backend/web/streamlit_app.py
-    ```
-
-Este archivo (`PROJECT_MAP.md`) puede servirte de referencia rápida mientras navegas por el código.
+Este mapa sustituye al anterior para reflejar que ya tienes un producto mínimo viable (MVP) funcionando.
