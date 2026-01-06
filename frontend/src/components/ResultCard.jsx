@@ -19,9 +19,9 @@ const ResultCard = ({ result, showAttention }) => {
             <motion.div
                 initial={{ y: 20 }}
                 animate={{ y: 0 }}
-                className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+                className="rounded-3xl overflow-hidden border border-slate-800 shadow-2xl shadow-black/30"
                 style={{
-                    background: `linear-gradient(135deg, ${color}15 0%, ${color}30 100%)`
+                    background: `linear-gradient(135deg, ${color}22 0%, rgba(2,6,23,0.85) 55%, ${color}14 100%)`,
                 }}
             >
                 <div className="p-8 text-center">
@@ -33,17 +33,17 @@ const ResultCard = ({ result, showAttention }) => {
                     >
                         {emoji}
                     </motion.div>
-                    <h2
-                        className="text-5xl font-bold uppercase mb-2"
-                        style={{ color }}
-                    >
+
+                    <h2 className="text-5xl font-bold uppercase mb-2" style={{ color }}>
                         {predicted_emotion}
                     </h2>
-                    <p className="text-2xl text-gray-600 mb-6">
+
+                    <p className="text-2xl text-slate-300 mb-6">
                         ({nameEs})
                     </p>
-                    <div className="inline-block px-6 py-3 bg-white rounded-full shadow-md">
-                        <p className="text-lg font-semibold text-gray-700">
+
+                    <div className="inline-block px-6 py-3 rounded-full border border-slate-800 bg-slate-950/60">
+                        <p className="text-lg font-semibold text-slate-200">
                             Confidence: <span style={{ color }}>{(confidence * 100).toFixed(1)}%</span>
                         </p>
                     </div>
@@ -68,12 +68,12 @@ const ResultCard = ({ result, showAttention }) => {
             <motion.details
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="bg-white rounded-2xl shadow-lg p-6"
+                className="rounded-2xl border border-slate-800 bg-slate-900/60 shadow-lg shadow-black/20 p-6"
             >
-                <summary className="cursor-pointer font-semibold text-gray-700 hover:text-purple-600 transition-colors">
+                <summary className="cursor-pointer font-semibold text-slate-200 hover:text-purple-300 transition-colors">
                     📋 View Complete Details
                 </summary>
-                <pre className="mt-4 p-4 bg-gray-50 rounded-lg overflow-auto text-sm">
+                <pre className="mt-4 p-4 rounded-lg overflow-auto text-sm text-slate-200 border border-slate-800 bg-slate-950/70">
                     {JSON.stringify(result, null, 2)}
                 </pre>
             </motion.details>
