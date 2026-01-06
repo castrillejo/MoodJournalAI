@@ -7,9 +7,7 @@ const TextInput = ({ onAnalyze, isLoading, showAttention, setShowAttention }) =>
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (text.trim()) {
-            onAnalyze(text);
-        }
+        if (text.trim()) onAnalyze(text);
     };
 
     const examples = [
@@ -30,11 +28,14 @@ const TextInput = ({ onAnalyze, isLoading, showAttention, setShowAttention }) =>
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                         placeholder="Write your text in English here... (e.g., I feel amazing today!)"
-                        className="w-full px-6 py-4 text-lg border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all duration-200 shadow-sm hover:shadow-md"
+                        className="w-full px-6 py-4 text-lg rounded-2xl resize-none transition-all duration-200
+                       bg-slate-900/60 border border-slate-700 text-slate-100 placeholder:text-slate-500
+                       focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                       shadow-sm shadow-black/20"
                         rows="5"
                         disabled={isLoading}
                     />
-                    <div className="absolute bottom-4 right-4 text-sm text-gray-400">
+                    <div className="absolute bottom-4 right-4 text-sm text-slate-500">
                         {text.length} / 512
                     </div>
                 </div>
@@ -45,10 +46,10 @@ const TextInput = ({ onAnalyze, isLoading, showAttention, setShowAttention }) =>
                             type="checkbox"
                             checked={showAttention}
                             onChange={(e) => setShowAttention(e.target.checked)}
-                            className="w-5 h-5 text-purple-600 rounded focus:ring-purple-500"
+                            className="w-5 h-5 text-purple-500 rounded focus:ring-purple-500"
                             disabled={isLoading}
                         />
-                        <span className="text-sm font-medium text-gray-700 group-hover:text-purple-600 transition-colors flex items-center gap-2">
+                        <span className="text-sm font-medium text-slate-300 group-hover:text-purple-300 transition-colors flex items-center gap-2">
                             <Sparkles className="w-4 h-4" />
                             Show Attention Weights
                         </span>
@@ -59,8 +60,10 @@ const TextInput = ({ onAnalyze, isLoading, showAttention, setShowAttention }) =>
                         disabled={!text.trim() || isLoading}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className={`px-8 py-3 rounded-xl font-semibold text-white transition-all duration-200 flex items-center gap-2 shadow-lg ${!text.trim() || isLoading
-                                ? 'bg-gray-400 cursor-not-allowed'
+                        className={`px-8 py-3 rounded-xl font-semibold text-white transition-all duration-200 flex items-center gap-2
+                        shadow-lg shadow-black/30 border border-slate-800
+                        ${!text.trim() || isLoading
+                                ? 'bg-slate-700/60 cursor-not-allowed'
                                 : showAttention
                                     ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
                                     : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
@@ -83,7 +86,7 @@ const TextInput = ({ onAnalyze, isLoading, showAttention, setShowAttention }) =>
 
             {/* Quick Examples */}
             <div className="mt-6">
-                <p className="text-sm font-medium text-gray-600 mb-3">💡 Quick Examples:</p>
+                <p className="text-sm font-medium text-slate-400 mb-3">💡 Quick Examples:</p>
                 <div className="flex flex-wrap gap-2">
                     {examples.map((example, index) => (
                         <motion.button
@@ -91,7 +94,10 @@ const TextInput = ({ onAnalyze, isLoading, showAttention, setShowAttention }) =>
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => setText(example.text)}
-                            className="px-4 py-2 text-sm bg-white border-2 border-gray-200 rounded-lg hover:border-purple-400 hover:text-purple-600 transition-all duration-200 shadow-sm"
+                            className="px-4 py-2 text-sm rounded-lg transition-all duration-200
+                         bg-slate-900/70 border border-slate-700 text-slate-200
+                         hover:border-purple-500 hover:text-purple-300
+                         shadow-sm shadow-black/20"
                             disabled={isLoading}
                         >
                             {example.text.substring(0, 30)}...

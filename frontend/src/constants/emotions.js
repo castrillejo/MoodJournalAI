@@ -8,12 +8,12 @@ export const EMOTION_EMOJIS = {
 };
 
 export const EMOTION_COLORS = {
-    joy: '#FFD700',      // Gold
-    sadness: '#4169E1',  // Royal Blue
-    fear: '#8B008B',     // Dark Magenta
-    anger: '#DC143C',    // Crimson
-    love: '#FF69B4',     // Hot Pink
-    surprise: '#FF8C00'  // Dark Orange
+    joy: '#FFD700',
+    sadness: '#4169E1',
+    fear: '#8B008B',
+    anger: '#DC143C',
+    love: '#FF69B4',
+    surprise: '#FF8C00'
 };
 
 export const EMOTION_NAMES = {
