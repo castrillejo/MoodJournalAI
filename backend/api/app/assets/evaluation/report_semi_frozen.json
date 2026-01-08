@@ -1,0 +1,149 @@
+{
+  "generated_at": "2026-01-08T13:44:04",
+  "test_set": {
+    "path": "C:\\MoodJournalAI\\data\\finetuning\\test.csv",
+    "num_samples": 613
+  },
+  "labels_order": [
+    "joy",
+    "sadness",
+    "fear",
+    "anger",
+    "love",
+    "surprise"
+  ],
+  "variants": {
+    "semi_frozen2": {
+      "model": {
+        "name": "semi_frozen2",
+        "path": "C:\\MoodJournalAI\\model-training\\download-model\\roberta-base-english\\semi-frozen2"
+      },
+      "metrics": {
+        "accuracy": 0.7553017944535073,
+        "precision_weighted": 0.7529548816076119,
+        "recall_weighted": 0.7553017944535073,
+        "f1_weighted": 0.7390274653747838
+      },
+      "per_class": {
+        "joy": {
+          "precision": 0.7941176470588235,
+          "recall": 0.8957345971563981,
+          "f1": 0.8418708240534521
+        },
+        "sadness": {
+          "precision": 0.7526315789473684,
+          "recall": 0.8125,
+          "f1": 0.7814207650273224
+        },
+        "fear": {
+          "precision": 0.6931818181818182,
+          "recall": 0.8133333333333334,
+          "f1": 0.7484662576687117
+        },
+        "anger": {
+          "precision": 0.7536231884057971,
+          "recall": 0.65,
+          "f1": 0.697986577181208
+        },
+        "love": {
+          "precision": 0.5652173913043478,
+          "recall": 0.26,
+          "f1": 0.3561643835616438
+        },
+        "surprise": {
+          "precision": 1.0,
+          "recall": 0.23809523809523808,
+          "f1": 0.38461538461538464
+        }
+      }
+    },
+    "semi_frozen4": {
+      "model": {
+        "name": "semi_frozen4",
+        "path": "C:\\MoodJournalAI\\model-training\\download-model\\roberta-base-english\\semi-frozen4"
+      },
+      "metrics": {
+        "accuracy": 0.835236541598695,
+        "precision_weighted": 0.8330682269756624,
+        "recall_weighted": 0.835236541598695,
+        "f1_weighted": 0.8332248399134597
+      },
+      "per_class": {
+        "joy": {
+          "precision": 0.8904761904761904,
+          "recall": 0.8862559241706162,
+          "f1": 0.8883610451306413
+        },
+        "sadness": {
+          "precision": 0.8351063829787234,
+          "recall": 0.8920454545454546,
+          "f1": 0.8626373626373627
+        },
+        "fear": {
+          "precision": 0.8082191780821918,
+          "recall": 0.7866666666666666,
+          "f1": 0.7972972972972973
+        },
+        "anger": {
+          "precision": 0.8148148148148148,
+          "recall": 0.825,
+          "f1": 0.8198757763975155
+        },
+        "love": {
+          "precision": 0.7,
+          "recall": 0.56,
+          "f1": 0.6222222222222222
+        },
+        "surprise": {
+          "precision": 0.7142857142857143,
+          "recall": 0.7142857142857143,
+          "f1": 0.7142857142857143
+        }
+      }
+    },
+    "semi_frozen6": {
+      "model": {
+        "name": "semi_frozen6",
+        "path": "C:\\MoodJournalAI\\model-training\\download-model\\roberta-base-english\\semi-frozen6"
+      },
+      "metrics": {
+        "accuracy": 0.8629690048939641,
+        "precision_weighted": 0.8628630990926187,
+        "recall_weighted": 0.8629690048939641,
+        "f1_weighted": 0.8623359161939835
+      },
+      "per_class": {
+        "joy": {
+          "precision": 0.9095238095238095,
+          "recall": 0.9052132701421801,
+          "f1": 0.9073634204275535
+        },
+        "sadness": {
+          "precision": 0.8486486486486486,
+          "recall": 0.8920454545454546,
+          "f1": 0.8698060941828255
+        },
+        "fear": {
+          "precision": 0.8714285714285714,
+          "recall": 0.8133333333333334,
+          "f1": 0.8413793103448276
+        },
+        "anger": {
+          "precision": 0.8518518518518519,
+          "recall": 0.8625,
+          "f1": 0.8571428571428571
+        },
+        "love": {
+          "precision": 0.7727272727272727,
+          "recall": 0.68,
+          "f1": 0.723404255319149
+        },
+        "surprise": {
+          "precision": 0.7391304347826086,
+          "recall": 0.8095238095238095,
+          "f1": 0.7727272727272727
+        }
+      }
+    }
+  }
+}

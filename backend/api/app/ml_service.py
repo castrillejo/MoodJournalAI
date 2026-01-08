@@ -2,188 +2,180 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
 import numpy as np
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 class EmotionClassifier:
-    """
-    Singleton para gestionar el modelo de clasificación de emociones.
-    Se carga una sola vez al iniciar la aplicación.
-    """
-    
-    _instance = None
-    _model = None
-    _tokenizer = None
-    _device = None
-    
-    # Mapeo de IDs a nombres de emociones
-    EMOTION_LABELS = {
-        0: "joy",
-        1: "sadness",
-        2: "fear",
-        3: "anger",
-        4: "love",
-        5: "surprise"
-    }
-    
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-    
-    def __init__(self):
-        if self._model is None:
-            self.load_model()
-    
-    def load_model(self):
-        """Carga el modelo fine-tuned desde disco"""
-        # Ruta al modelo - ajustada a tu estructura real
-        # backend/api/app -> ../../.. = root -> model-training/download-model/roberta-base-english/finetuned-emotion
-        base_path = Path(__file__).parent.parent.parent.parent
-        model_path = base_path / "model-training" / "download-model" / "roberta-base-english" / "finetuned-emotion"
-        
-        if not model_path.exists():
-            raise FileNotFoundError(f"Modelo no encontrado en: {model_path}")
-        
-        logger.info(f"Cargando modelo desde: {model_path}")
-        
-        # Cargar tokenizer y modelo
+
+    EMOTION_LABELS = ["joy", "sadness", "fear", "anger", "love", "surprise"]
+
+    _instances: Dict[str, "EmotionClassifier"] = {}
+
+    def __new__(cls, model_key: str = "finetuned"):
+        key = str(model_key).strip().lower()
+        if key not in cls._instances:
+            cls._instances[key] = super().__new__(cls)
+        return cls._instances[key]
+
+    def __init__(self, model_key: str = "finetuned"):
+        # Evitar re-cargar si ya existe en cache
+        if getattr(self, "_loaded", False):
+            return
+
+        self._loaded = False
+        self._model = None
+        self._tokenizer = None
+        self._device = None
+
+        self.model_key = str(model_key).strip().lower()
+        self.load_model(self.model_key)
+        self._loaded = True
+
+    @staticmethod
+    def _project_root() -> Path:
+        # backend/api/app/ml_service.py -> parents[3] = C:\MoodJournalAI
+        return Path(__file__).resolve().parents[3]
+
+    @classmethod
+    def _model_root_dir(cls) -> Path:
+        root = cls._project_root()
+        return root / "model-training" / "download-model" / "roberta-base-english"
+
+    @classmethod
+    def _resolve_model_dir(cls, model_key: str) -> Path:
+        model_root = cls._model_root_dir()
+
+        mapping = {
+            "finetuned": "finetuned-emotion",
+            "frozen": "frozen-classifier",
+            "semi_frozen2": "semi-frozen2",
+            "semi_frozen4": "semi-frozen4",
+            "semi_frozen6": "semi-frozen6",
+        }
+
+        if model_key not in mapping:
+            raise ValueError(
+                f"Modelo no soportado: {model_key}. "
+                f"Usa: finetuned | frozen | semi_frozen2 | semi_frozen4 | semi_frozen6"
+            )
+
+        primary = model_root / mapping[model_key]
+        if primary.exists():
+            return primary
+
+        # Fallback mínimo por si tus carpetas usan '_' en vez de '-'
+        alt = model_root / mapping[model_key].replace("-", "_")
+        if alt.exists():
+            return alt
+
+        raise FileNotFoundError(f"Modelo no encontrado en: {primary} (ni en {alt})")
+
+    def load_model(self, model_key: str):
+        """Carga el modelo desde disco según model_key (tokenizer incluido en la carpeta del modelo)."""
+        model_path = self._resolve_model_dir(model_key)
+
+        logger.info(f"Cargando modelo '{model_key}' desde: {model_path}")
+
+        # Cargar tokenizer y modelo (desde la MISMA carpeta del modelo)
         self._tokenizer = AutoTokenizer.from_pretrained(str(model_path))
         self._model = AutoModelForSequenceClassification.from_pretrained(str(model_path))
-        
-        # Detectar y usar GPU si está disponible
+
+        # GPU si hay
         self._device = "cuda" if torch.cuda.is_available() else "cpu"
         self._model = self._model.to(self._device)
-        self._model.eval()  # Modo evaluación (no entrenamiento)
-        
-        logger.info(f"✅ Modelo cargado en {self._device.upper()}")
-    
+        self._model.eval()
+
+        logger.info(f"✅ Modelo '{model_key}' cargado en {self._device.upper()}")
+
     def predict(self, text: str) -> Dict:
-        """
-        Predice la emoción de un texto
-        
-        Args:
-            text: Texto en inglés para clasificar
-            
-        Returns:
-            Dict con predicted_class, confidence y all_probabilities
-        """
-        # Tokenizar
+        """Predicción sin attention."""
         inputs = self._tokenizer(
-            text, 
-            return_tensors="pt", 
-            truncation=True, 
+            text,
+            return_tensors="pt",
+            truncation=True,
             max_length=128,
-            padding=True
+            padding=True,
         )
-        
-        # Mover a GPU si disponible
         inputs = {k: v.to(self._device) for k, v in inputs.items()}
-        
-        # Hacer predicción (sin calcular gradientes)
+
         with torch.no_grad():
             outputs = self._model(**inputs)
             logits = outputs.logits
             probabilities = torch.softmax(logits, dim=-1)
-        
-        # Obtener clase predicha y confianza
+
         predicted_class_id = torch.argmax(probabilities, dim=-1).item()
         confidence = probabilities[0, predicted_class_id].item()
-        
-        # Todas las probabilidades (convertir a lista Python)
-        all_probs = probabilities[0].cpu().numpy().tolist()
-        
+        all_probs = probabilities[0].detach().cpu().numpy().tolist()
+
         return {
             "predicted_class": predicted_class_id,
             "predicted_emotion": self.EMOTION_LABELS[predicted_class_id],
             "confidence": confidence,
-            "all_probabilities": all_probs
+            "all_probabilities": all_probs,
         }
-    
+
     def predict_with_attention(self, text: str) -> Dict:
-        """
-        Predice la emoción y extrae attention weights para visualización
-        
-        Args:
-            text: Texto en inglés para clasificar
-            
-        Returns:
-            Dict con predicción + tokens + attention scores
-        """
-        # Tokenizar
+        """Predicción con attention (como tu original)."""
         inputs = self._tokenizer(
-            text, 
-            return_tensors="pt", 
-            truncation=True, 
+            text,
+            return_tensors="pt",
+            truncation=True,
             max_length=128,
             padding=True,
-            return_offsets_mapping=False
         )
-        
-        # Mover a GPU si disponible
-        inputs_device = {k: v.to(self._device) for k, v in inputs.items()}
-        
-        # Hacer predicción CON attention weights
+        inputs = {k: v.to(self._device) for k, v in inputs.items()}
+
         with torch.no_grad():
-            outputs = self._model(**inputs_device, output_attentions=True)
+            outputs = self._model(**inputs, output_attentions=True)
             logits = outputs.logits
+            attentions = outputs.attentions
             probabilities = torch.softmax(logits, dim=-1)
-            attentions = outputs.attentions  # Tuple de (12 capas, batch, heads, seq_len, seq_len)
-        
-        # Obtener predicción
+
         predicted_class_id = torch.argmax(probabilities, dim=-1).item()
         confidence = probabilities[0, predicted_class_id].item()
-        all_probs = probabilities[0].cpu().numpy().tolist()
-        
-        # Extraer attention de la última capa
-        # attentions[-1] = última capa transformer
-        # Shape: (batch_size, num_heads, seq_len, seq_len)
-        last_layer_attention = attentions[-1][0]  # Primer batch
-        
-        # Promediar sobre todos los heads
-        # Shape: (seq_len, seq_len)
-        avg_attention = last_layer_attention.mean(dim=0)
-        
-        # Attention del token [CLS] (primera posición) a todos los demás tokens
-        # Esto indica qué tan importante fue cada token para la clasificación
-        cls_attention = avg_attention[0].cpu().numpy()
-        
-        # Convertir input_ids a tokens legibles
-        tokens = self._tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])
-        
-        # Limpiar tokens especiales de RoBERTa (Ġ indica espacio)
-        clean_tokens = []
-        attention_scores = []
-        
-        for i, (token, score) in enumerate(zip(tokens, cls_attention)):
-            # Saltar tokens especiales al inicio/final
-            if token in ['<s>', '</s>', '<pad>']:
+        all_probs = probabilities[0].detach().cpu().numpy().tolist()
+
+        # Última capa: (batch, heads, seq, seq)
+        last_layer_attention = attentions[-1][0]  # primer batch
+        avg_attention = last_layer_attention.mean(dim=0)  # (seq, seq)
+        cls_attention = avg_attention[0].detach().cpu().numpy()  # atención del token 0 al resto
+
+        tokens = self._tokenizer.convert_ids_to_tokens(inputs["input_ids"][0])
+
+        clean_tokens: List[str] = []
+        attention_scores: List[float] = []
+
+        for token, score in zip(tokens, cls_attention):
+            if token in ["<s>", "</s>", "<pad>"]:
                 continue
-            
-            # Limpiar prefijo Ġ (indica palabra que empieza después de espacio)
-            clean_token = token.replace('Ġ', ' ')
-            clean_tokens.append(clean_token)
+
+            token_clean = token.replace("Ġ", "")
+            if token_clean.strip() == "":
+                continue
+
+            clean_tokens.append(token_clean)
             attention_scores.append(float(score))
-        
-        # Normalizar scores para mejor visualización (0-1)
+
+        # Normalizar 0..1
         if attention_scores:
             min_score = min(attention_scores)
             max_score = max(attention_scores)
-            if max_score > min_score:
+            if max_score - min_score > 1e-12:
                 attention_scores = [
-                    (score - min_score) / (max_score - min_score) 
-                    for score in attention_scores
+                    (s - min_score) / (max_score - min_score) for s in attention_scores
                 ]
-        
+            else:
+                attention_scores = [0.0 for _ in attention_scores]
+
         return {
             "predicted_class": predicted_class_id,
             "predicted_emotion": self.EMOTION_LABELS[predicted_class_id],
             "confidence": confidence,
             "all_probabilities": all_probs,
             "tokens": clean_tokens,
-            "attention_scores": attention_scores
+            "attention_scores": attention_scores,
         }
-

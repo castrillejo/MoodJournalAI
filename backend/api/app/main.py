@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import predict
+from .routes import predict, evaluation
 import logging
 
 # Configurar logging
@@ -21,7 +21,7 @@ app = FastAPI(
 # Configurar CORS (para permitir requests desde frontend)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En producción: especificar dominios exactos
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,6 +32,12 @@ app.include_router(
     predict.router, 
     prefix="/api", 
     tags=["Predictions"]
+)
+
+app.include_router(
+    evaluation.router,
+    prefix="/api",
+    tags=["Evaluation"]
 )
 
 @app.get("/")
