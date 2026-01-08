@@ -1,11 +1,9 @@
 import pandas as pd
 import psycopg2
 from psycopg2.extras import execute_values
-
-# Config de conexión al postgres del docker compose
 import os
 
-# Config de conexión al postgres (localhost para ejecución local)
+#Datos de la BD
 DB_CONFIG = {
     "host": "localhost",
     "database": "moodjournal",
@@ -15,17 +13,13 @@ DB_CONFIG = {
 }
 
 def load_csv_to_table(csv_path, table_name, columns):
-    # Verificar si el archivo existe
+    
     if not os.path.exists(csv_path):
-        print(f"❌ Error: No se encuentra el archivo: {csv_path}")
+        print(f"Error: No se encuentra el archivo: {csv_path}")
         return
 
     df = pd.read_csv(csv_path)
-
-    # Convertimos NaN a None (PostgreSQL friendly)
     df = df.where(pd.notnull(df), None)
-
-    print(f"Cargando {len(df)} filas en {table_name}...")
 
     try:
         conn = psycopg2.connect(**DB_CONFIG)
@@ -44,14 +38,12 @@ def load_csv_to_table(csv_path, table_name, columns):
         cur.close()
         conn.close()
 
-        print(f" ✔ Carga completa: {table_name}")
+        print(f"Carga completa: {table_name}")
     except Exception as e:
-        print(f"❌ Error conectando a BD: {e}")
+        print(f"Error conectando a BD: {e}")
 
 def main():
     print("Iniciando ETL...")
-    
-    # Obtener ruta base del proyecto (un nivel arriba de 'etl')
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     data_dir = os.path.join(base_dir, "data")
     
@@ -68,7 +60,6 @@ def main():
         "entradas_diario",
         ["id_entrada", "id_usuario", "fecha", "texto_diario", "emocion_principal", "sentimiento_usuario"]
     )
-
     print("ETL completada con éxito.")
 
 if __name__ == "__main__":

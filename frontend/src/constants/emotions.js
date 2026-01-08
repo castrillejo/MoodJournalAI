@@ -4,7 +4,7 @@ export const EMOTION_EMOJIS = {
     fear: '😨',
     anger: '😡',
     love: '💕',
-    surprise: '😮'
+    surprise: '😮',
 };
 
 export const EMOTION_COLORS = {
@@ -13,16 +13,16 @@ export const EMOTION_COLORS = {
     fear: '#8B008B',
     anger: '#DC143C',
     love: '#FF69B4',
-    surprise: '#FF8C00'
+    surprise: '#FF8C00',
 };
 
-export const EMOTION_NAMES = {
+export const EMOTION_NAMES_EN = {
     joy: 'Joy',
     sadness: 'Sadness',
     fear: 'Fear',
     anger: 'Anger',
     love: 'Love',
-    surprise: 'Surprise'
+    surprise: 'Surprise',
 };
 
 export const EMOTION_NAMES_ES = {
@@ -31,5 +31,5 @@ export const EMOTION_NAMES_ES = {
     fear: 'Miedo',
     anger: 'Ira',
     love: 'Amor',
-    surprise: 'Sorpresa'
+    surprise: 'Sorpresa',
 };

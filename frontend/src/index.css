@@ -13,6 +13,12 @@ body,
     height: 100%;
 }
 
+html,
+body {
+    background: #0b1220;
+    color: rgba(255, 255, 255, 0.92);
+}
+
 body {
     margin: 0;
     background: #020617;
@@ -64,4 +70,54 @@ code {
             rgba(30, 41, 59, 0.15) 40%,
             rgba(30, 41, 59, 0.15) 100%);
     background-size: 1000px 104px;
+}
+
+.bg-white {
+    background-color: rgba(17, 24, 39, 0.92) !important;
+}
+
+/* gray-900-ish */
+.bg-gray-50 {
+    background-color: rgba(15, 23, 42, 0.65) !important;
+}
+
+/* slate-900-ish */
+.bg-gray-100 {
+    background-color: rgba(15, 23, 42, 0.75) !important;
+}
+
+.bg-gray-200 {
+    background-color: rgba(30, 41, 59, 0.85) !important;
+}
+
+.text-gray-900 {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.text-gray-800 {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.text-gray-700 {
+    color: rgba(226, 232, 240, 0.92) !important;
+}
+
+.text-gray-600 {
+    color: rgba(203, 213, 225, 0.92) !important;
+}
+
+.text-gray-500 {
+    color: rgba(148, 163, 184, 0.95) !important;
+}
+
+.border-gray-100 {
+    border-color: rgba(148, 163, 184, 0.12) !important;
+}
+
+.border-gray-200 {
+    border-color: rgba(148, 163, 184, 0.18) !important;
+}
+
+.border-gray-300 {
+    border-color: rgba(148, 163, 184, 0.24) !important;
 }
