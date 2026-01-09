@@ -3,7 +3,6 @@ import psycopg2
 from psycopg2.extras import execute_values
 import os
 
-#Datos de la BD
 DB_CONFIG = {
     "host": "localhost",
     "database": "moodjournal",
