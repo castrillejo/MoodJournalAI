@@ -87,7 +87,6 @@ Abre tu navegador en **`http://localhost:5173`** y deberías ver:
 ```
 MoodJournalAI/
 ├── 📄 README.md                    # Este archivo
-│
 ├── 📂 backend/                     # ✅ BACKEND FASTAPI (COMPLETO)
 │   ├── api/
 │   │   └── app/
@@ -170,15 +169,13 @@ MoodJournalAI/
 - **Estrategia:** Todas las capas de RoBERTa + Classification Head entrenables
 - **Parámetros entrenables:** ~125 millones
 - **Epochs:** 3
-- **Accuracy:** ~77-79%
-- **Uso:** Máxima precisión, requiere más recursos
+- **Accuracy:** ~90.9%
 
 ### **2️⃣ Frozen (Feature Extraction)**
 - **Estrategia:** RoBERTa congelado, solo Classification Head entrenable
 - **Parámetros entrenables:** ~4,608 (0.003%)
 - **Epochs:** 3
-- **Accuracy:** ~65-70%
-- **Uso:** Rápido, menos overfitting, embedded extraction
+- **Accuracy:** 48.9%
 
 ### **3️⃣ Semi-Frozen (Híbrido)**
 - **Estrategia:** Congelar capas intermedias, entrenar primeras/últimas
@@ -186,8 +183,7 @@ MoodJournalAI/
   - `semi_frozen2` → Descongela capas 0, 2
   - `semi_frozen4` → Descongela capas 0, 2, 4
   - `semi_frozen6` → Descongela capas 0, 2, 4, 6
-- **Accuracy:** Variable según capas (~70-75%)
-- **Uso:** Balance entre precisión y eficiencia
+- **Accuracy:** Variable según capas (~75-85%)
 
 ---
 
