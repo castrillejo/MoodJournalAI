@@ -11,7 +11,7 @@ const ConfusionMatrixGrid = ({ labels, matrix }) => {
 
     return (
         <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 overflow-auto">
-            <h3 className="text-lg font-bold text-gray-800 mb-4">Confusion Matrix (Fine-tuned)</h3>
+            <h3 className="text-lg font-bold text-gray-800 mb-4">Matriz de confusión (Fine-tuned)</h3>
 
             <div className="min-w-[720px]">
                 <table className="w-full border-separate border-spacing-2">

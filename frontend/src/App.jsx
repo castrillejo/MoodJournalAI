@@ -5,8 +5,7 @@ import { motion } from 'framer-motion';
 import { checkAPIHealth, fetchEvaluationOverview, predictCompareWithAttention } from './services/api';
 import ModelOverviewSection from './components/ModelOverviewSection';
 import ComparePredictionsSection from './components/ComparePredictionsSection';
-
-import './App.css';
+import UsersSection from "./components/UsersSection";
 
 function App() {
   const [apiStatus, setApiStatus] = useState('checking');
@@ -112,13 +111,11 @@ function App() {
               <div className="text-4xl">🎭</div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-800">MoodJournalAI</h1>
-                <p className="text-sm text-gray-600">6 emotion classification</p>
+                <p className="text-sm text-gray-600">Clasifica hasta 6 emociones</p>
               </div>
             </motion.div>
 
             <div className="flex items-center gap-3 flex-wrap">
-
-
               {/* API Status */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
@@ -174,6 +171,11 @@ function App() {
           compareError={compareError}
           compareResult={compareResult}
         />
+
+        {/* Section 3: Users */}
+        <UsersSection />
+
+
       </main>
 
       {/* Footer */}

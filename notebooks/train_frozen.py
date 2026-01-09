@@ -137,74 +137,57 @@ def main():
     
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
-    # 6. Configurar Argumentos de Entrenamiento
-    # Como solo entrenamos el clasificador, podemos usar:
-    # - Learning rate un poco mayor
-    # - Menos épocas (converge más rápido)
-    # - Batch size mayor (menos memoria)
     training_args = TrainingArguments(
         output_dir=OUTPUT_DIR,
-        
-        # Hyperparámetros ajustados para feature extraction
-        learning_rate=5e-4,  # Mayor que en fine-tuning (era 2e-5)
-        per_device_train_batch_size=32,  # Mayor que en fine-tuning (era 16)
+
+        learning_rate=5e-4,  
+        per_device_train_batch_size=32, 
         per_device_eval_batch_size=64,
-        num_train_epochs=5,  # Unas pocas épocas más para el clasificador
+        num_train_epochs=5,  
         weight_decay=0.01,
         
-        # Evaluación y Guardado
         eval_strategy="epoch",
         save_strategy="epoch",
         load_best_model_at_end=True,
         metric_for_best_model="f1",
         
-        # Logging
         logging_dir=LOG_DIR,
         logging_steps=20,
         report_to=["tensorboard"],
         
-        # Optimización
         fp16=torch.cuda.is_available(),
         dataloader_num_workers=0,
     )
 
-    # 7. Inicializar Trainer
     trainer = Trainer(
         model=model,
         args=training_args,
         train_dataset=tokenized_datasets['train'],
         eval_dataset=tokenized_datasets['validation'],
-        processing_class=tokenizer,  # Usar processing_class en vez de tokenizer
+        processing_class=tokenizer,
         data_collator=data_collator,
         compute_metrics=compute_metrics,
     )
 
-    print("\n🏋️‍♂️ Todo listo para Feature Extraction.")
-    print(f"   Los checkpoints irán a: {OUTPUT_DIR}")
-    print(f"   El modelo FINAL irá a:  {FINAL_MODEL_DIR}")
-    print("\n📝 NOTA: Este entrenamiento será MUCHO más rápido (~10-15 min)")
-    print("         porque solo entrenamos la capa clasificadora.\n")
+    print("\nTodo listo para Feature Extraction.")
+    print(f"Los checkpoints irán a: {OUTPUT_DIR}")
+    print(f"El modelo FINAL irá a:  {FINAL_MODEL_DIR}")
     
     return trainer
 
 if __name__ == "__main__":
     trainer = main()
-    
-    # Confirmación de usuario para arrancar
+
     resp = input("\n¿Quieres comenzar el entrenamiento con capas CONGELADAS? (s/n): ")
     if resp.lower() == 's':
-        print("🚀 Entrenando (solo clasificador)...")
+        print("Entrenando (solo clasificador)...")
         trainer.train()
         
-        print(f"💾 Guardando modelo final en: {FINAL_MODEL_DIR}...")
+        print(f"Guardando modelo final en: {FINAL_MODEL_DIR}...")
         trainer.save_model(FINAL_MODEL_DIR)
-        print("✅ Guardado exitoso.")
+        print("Guardado exitoso.")
         print("\n" + "="*70)
-        print("🎉 Entrenamiento completado!")
+        print("Entrenamiento completado!")
         print("="*70)
-        print("\nAhora puedes comparar 3 modelos:")
-        print("  1. BASE (clasificador aleatorio)")
-        print("  2. FROZEN (solo clasificador entrenado) ← Este")
-        print("  3. FINE-TUNED (todo entrenado)")
     else:
-        print("🛑 Entrenamiento cancelado.")
+        print("Entrenamiento cancelado.")

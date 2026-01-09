@@ -30,20 +30,17 @@ export const predictEmotionWithAttention = async (text, model) => {
 };
 
 export const predictCompareWithAttention = async (text, semiVariantKey) => {
-    // 1) Intento endpoint dedicado (si lo implementas luego)
     try {
         const response = await api.post('/predict/compare/attention', {
             text,
             semi_variant: semiVariantKey,
         });
-        return response.data; // esperado: { frozen: {...}, semi: {...}, finetuned: {...} }
+        return response.data;
     } catch (err) {
         const status = err?.response?.status;
         if (status !== 404) {
-            // No era "no existe", así que lanzamos error real
             throw err;
         }
-        // 2) Fallback: 3 llamadas
     }
 
     const [frozen, semi, finetuned] = await Promise.all([
@@ -53,4 +50,26 @@ export const predictCompareWithAttention = async (text, semiVariantKey) => {
     ]);
 
     return { frozen, semi, finetuned };
+};
+
+export const searchUsers = async (q, limit = 5) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/users/search`, {
+            params: { q, limit },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error searching users:', error);
+        throw error;
+    }
+};
+
+export const getUserStats = async (id) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/users/${id}/stats`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching user stats:', error);
+        throw error;
+    }
 };

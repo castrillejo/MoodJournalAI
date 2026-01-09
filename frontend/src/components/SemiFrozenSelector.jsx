@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 
 const SemiFrozenSelector = ({ selected, onChange }) => {
     const options = [
-        { key: 'semi_frozen2', label: '2 layers' },
-        { key: 'semi_frozen4', label: '4 layers' },
-        { key: 'semi_frozen6', label: '6 layers' },
+        { key: 'semi_frozen2', label: '2 capas' },
+        { key: 'semi_frozen4', label: '4 capas' },
+        { key: 'semi_frozen6', label: '6 capas' },
     ];
 
     return (

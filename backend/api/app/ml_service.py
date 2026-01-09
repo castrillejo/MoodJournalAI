@@ -8,7 +8,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 class EmotionClassifier:
 
     EMOTION_LABELS = ["joy", "sadness", "fear", "anger", "love", "surprise"]
@@ -22,7 +21,6 @@ class EmotionClassifier:
         return cls._instances[key]
 
     def __init__(self, model_key: str = "finetuned"):
-        # Evitar re-cargar si ya existe en cache
         if getattr(self, "_loaded", False):
             return
 
@@ -37,7 +35,6 @@ class EmotionClassifier:
 
     @staticmethod
     def _project_root() -> Path:
-        # backend/api/app/ml_service.py -> parents[3] = C:\MoodJournalAI
         return Path(__file__).resolve().parents[3]
 
     @classmethod
@@ -67,7 +64,6 @@ class EmotionClassifier:
         if primary.exists():
             return primary
 
-        # Fallback mínimo por si tus carpetas usan '_' en vez de '-'
         alt = model_root / mapping[model_key].replace("-", "_")
         if alt.exists():
             return alt
@@ -80,43 +76,14 @@ class EmotionClassifier:
 
         logger.info(f"Cargando modelo '{model_key}' desde: {model_path}")
 
-        # Cargar tokenizer y modelo (desde la MISMA carpeta del modelo)
+
         self._tokenizer = AutoTokenizer.from_pretrained(str(model_path))
         self._model = AutoModelForSequenceClassification.from_pretrained(str(model_path))
-
-        # GPU si hay
         self._device = "cuda" if torch.cuda.is_available() else "cpu"
         self._model = self._model.to(self._device)
         self._model.eval()
 
         logger.info(f"✅ Modelo '{model_key}' cargado en {self._device.upper()}")
-
-    def predict(self, text: str) -> Dict:
-        """Predicción sin attention."""
-        inputs = self._tokenizer(
-            text,
-            return_tensors="pt",
-            truncation=True,
-            max_length=128,
-            padding=True,
-        )
-        inputs = {k: v.to(self._device) for k, v in inputs.items()}
-
-        with torch.no_grad():
-            outputs = self._model(**inputs)
-            logits = outputs.logits
-            probabilities = torch.softmax(logits, dim=-1)
-
-        predicted_class_id = torch.argmax(probabilities, dim=-1).item()
-        confidence = probabilities[0, predicted_class_id].item()
-        all_probs = probabilities[0].detach().cpu().numpy().tolist()
-
-        return {
-            "predicted_class": predicted_class_id,
-            "predicted_emotion": self.EMOTION_LABELS[predicted_class_id],
-            "confidence": confidence,
-            "all_probabilities": all_probs,
-        }
 
     def predict_with_attention(self, text: str) -> Dict:
         """Predicción con attention (como tu original)."""
@@ -139,10 +106,9 @@ class EmotionClassifier:
         confidence = probabilities[0, predicted_class_id].item()
         all_probs = probabilities[0].detach().cpu().numpy().tolist()
 
-        # Última capa: (batch, heads, seq, seq)
-        last_layer_attention = attentions[-1][0]  # primer batch
-        avg_attention = last_layer_attention.mean(dim=0)  # (seq, seq)
-        cls_attention = avg_attention[0].detach().cpu().numpy()  # atención del token 0 al resto
+        last_layer_attention = attentions[-1][0]  
+        avg_attention = last_layer_attention.mean(dim=0)  
+        cls_attention = avg_attention[0].detach().cpu().numpy()  
 
         tokens = self._tokenizer.convert_ids_to_tokens(inputs["input_ids"][0])
 
@@ -160,7 +126,6 @@ class EmotionClassifier:
             clean_tokens.append(token_clean)
             attention_scores.append(float(score))
 
-        # Normalizar 0..1
         if attention_scores:
             min_score = min(attention_scores)
             max_score = max(attention_scores)

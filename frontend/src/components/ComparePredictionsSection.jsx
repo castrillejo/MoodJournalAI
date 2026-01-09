@@ -20,9 +20,9 @@ const ComparePredictionsSection = ({
         <section id="compare" className="scroll-mt-28 mt-12">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                 <div className="max-w-6xl mx-auto mb-6">
-                    <h2 className="text-3xl font-bold text-gray-800">Compare Predictions</h2>
+                    <h2 className="text-3xl font-bold text-gray-800">Comparar Prediccion Puntual</h2>
                     <p className="text-gray-600 mt-1">
-                        We run the same input through Frozen, Semi-frozen ({selectedSemi}) and Fine-tuned.
+                        Ejecutamos el mismo input a través del modelo completamente congelado, el semicongelado ({selectedSemi}) y el fine-tuned.
                     </p>
                 </div>
 
@@ -42,15 +42,15 @@ const ComparePredictionsSection = ({
                     <div className="max-w-6xl mx-auto mt-8 space-y-6">
                         {/* 3 pie charts aligned */}
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <PredictionCard title="Frozen-classifier" result={frozen} />
-                            <PredictionCard title={`Semi-frozen (${selectedSemi})`} result={semi} />
-                            <PredictionCard title="Fine-tuned" result={finetuned} />
+                            <PredictionCard title="Clasificador congelado" result={frozen} />
+                            <PredictionCard title={`Clasificador semicongelado (${selectedSemi})`} result={semi} />
+                            <PredictionCard title="Clasificador fine-tuned" result={finetuned} />
                         </div>
 
                         {/* Attention blocks */}
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <div className="bg-white rounded-2xl shadow-lg p-5 border border-gray-100">
-                                <p className="text-sm font-semibold text-gray-600 mb-3">Attention — Frozen</p>
+                                <p className="text-sm font-semibold text-gray-600 mb-3">Attention — Congelado</p>
                                 {frozen?.attention ? (
                                     <AttentionVisualization attention={frozen.attention} emotion={frozen.predicted_emotion} />
                                 ) : (
@@ -59,7 +59,7 @@ const ComparePredictionsSection = ({
                             </div>
 
                             <div className="bg-white rounded-2xl shadow-lg p-5 border border-gray-100">
-                                <p className="text-sm font-semibold text-gray-600 mb-3">Attention — Semi</p>
+                                <p className="text-sm font-semibold text-gray-600 mb-3">Attention — Semicongelado</p>
                                 {semi?.attention ? (
                                     <AttentionVisualization attention={semi.attention} emotion={semi.predicted_emotion} />
                                 ) : (
