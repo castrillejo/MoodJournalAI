@@ -2,31 +2,86 @@
 
 ## 📋 Introducción
 
-**MoodJournalAI** es un sistema inteligente de análisis de emociones y estados de ánimo basado en entradas de diario personal. El proyecto utiliza **procesamiento de lenguaje natural (NLP)** con modelos RoBERTa en inglés para analizar sentimientos en textos de diarios, identificando patrones emocionales y tendencias en el bienestar de los usuarios.
+**MoodJournalAI** es un sistema inteligente de análisis de emociones y estados de ánimo basado en entradas de diario personal. El proyecto utiliza **procesamiento de lenguaje natural (NLP)** con modelos RoBERTa fine-tuned para clasificar emociones en textos de diarios, proporcionando análisis detallados con visualizaciones de attention mechanisms y comparación entre diferentes estrategias de entrenamiento.
 
 ### 🎯 Características principales
 
-- 🤖 **Modelo RoBERTa-base (inglés)** descargado localmente para análisis de sentimientos
-- 🗄️ **Base de datos PostgreSQL** para almacenar entradas de diario
-- 🔄 **Pipeline ETL** para carga de datos de muestra
-- 📊 **Análisis de embeddings** con modelos transformer
-- 🚀 Preparado para **fine-tuning** de modelos personalizados
-- 🎭 **6 emociones detectables:** joy, sadness, fear, anger, love, surprise
-- 🎮 **Optimizado para RTX 4060** (8GB VRAM)
+#### 🤖 **Modelos de ML Entrenados**
+- **RoBERTa Fine-tuned Completo** → Accuracy: ~77-79%
+- **RoBERTa Frozen (Feature Extraction)** → Accuracy: ~65-70%
+- **RoBERTa Semi-Frozen (Capas 0, 2, 4, 6)** → Diferentes niveles de aprendizaje
+- **Visualización de Attention Weights** para interpretabilidad
 
-### 🚀 Inicio Rápido
+#### 💻 **Aplicación Full-Stack Funcional**
+- **Frontend React** con Vite + TailwindCSS + Framer Motion
+- **Backend FastAPI** con modelos ML integrados
+- **Dashboard Interactivo** con métricas, gráficos y comparaciones
+- **Sección de Usuarios** para análisis de patrones emocionales por usuario
 
-**¿Primera vez configurando el proyecto en un PC nuevo?**  
-👉 **[Ver guía completa de setup: SETUP_PC_CASA.md](SETUP_PC_CASA.md)**
+#### 📊 **Análisis y Evaluación**
+- 🎭 **6 emociones clasificables:** joy, sadness, fear, anger, love, surprise
+- 📈 **Métricas completas:** Accuracy, Precision, Recall, F1-Score
+- 🧩 **Matriz de Confusión** para análisis detallado
+- 🔍 **Comparación de modelos** side-by-side
 
-Esta guía incluye:
-- ✅ Instalación desde cero en Windows
-- ✅ Configuración de Docker, PostgreSQL, DBeaver
-- ✅ Setup de Python con entorno virtual
-- ✅ Configuración de CUDA para RTX 4060
-- ✅ Descarga del modelo RoBERTa
-- ✅ Carga de datos con ETL
-- ✅ Verificación completa del sistema
+#### 🗄️ **Infraestructura**
+- PostgreSQL con Docker Compose
+- Pipeline ETL para carga de datos
+- 6,124+ entradas de diario etiquetadas
+- Optimizado para GPU (RTX 4060 8GB VRAM)
+
+---
+
+## 🚀 Guía de Arranque Rápida
+
+### ¿Primera vez? → [Ver SETUP_PC_CASA.md](SETUP_PC_CASA.md)
+
+Para ejecutar la aplicación completa, necesitas **3 servicios en paralelo**:
+
+### **Terminal 1: Base de Datos** 🗄️
+```powershell
+# Desde la raíz del proyecto
+docker-compose up -d
+```
+*PostgreSQL corriendo en `localhost:5432`*
+
+---
+
+### **Terminal 2: Backend API** 🧠
+```powershell
+# 1. Activar entorno virtual
+.\.venv\Scripts\Activate
+
+# 2. Iniciar servidor FastAPI
+python -m uvicorn backend.api.app.main:app --reload
+```
+*API corriendo en `http://127.0.0.1:8000`*  
+*Documentación interactiva: `http://127.0.0.1:8000/docs`*
+
+---
+
+### **Terminal 3: Frontend Web** 💻
+```powershell
+# 1. Entrar en la carpeta frontend
+cd frontend
+
+# 2. Instalar dependencias (solo primera vez)
+npm install
+
+# 3. Iniciar aplicación React
+npm run dev
+```
+*Aplicación web en `http://localhost:5173`*
+
+---
+
+### **✅ Verificación**
+
+Abre tu navegador en **`http://localhost:5173`** y deberías ver:
+- ✅ **API: Online** (indicador verde en la cabecera)
+- ✅ **Model Overview** con métricas de los 3 modelos
+- ✅ **Compare Predictions** para probar predicciones
+- ✅ **Users Analysis** con patrones emocionales por usuario
 
 ---
 
@@ -34,223 +89,289 @@ Esta guía incluye:
 
 ```
 MoodJournalAI/
-├── SETUP_PC_CASA.md      # 🆕 Guía completa de setup desde cero
-├── backend/              # API backend (en desarrollo)
-├── frontend/             # Interfaz de usuario (en desarrollo)
-├── data/                 # Datos de muestra
-│   ├── usuarios.csv      # Datos de usuarios (~7.8 KB)
-│   └── entradas.csv      # Entradas de diario (~1.16 MB, 6,124 entradas)
-├── etl/                  # Pipeline ETL
+├── 📄 README.md                    # Este archivo
+├── 📄 GUIA_PROYECTO.md             # Guía de desarrollo paso a paso
+├── 📄 SETUP_PC_CASA.md             # Setup desde cero en un PC nuevo
+├── 📄 PLAN_FINETUNING.md           # Teoría y plan de fine-tuning
+│
+├── 📂 backend/                     # ✅ BACKEND FASTAPI (COMPLETO)
+│   ├── api/
+│   │   └── app/
+│   │       ├── main.py             # Aplicación FastAPI principal
+│   │       ├── ml_service.py       # Carga de modelos ML
+│   │       ├── analysis_service.py # Análisis de usuarios
+│   │       ├── models.py           # Schemas Pydantic
+│   │       └── routes/
+│   │           ├── predict.py      # Endpoints de predicción
+│   │           ├── evaluation.py   # Endpoints de métricas
+│   │           └── users.py        # Endpoints de usuarios
+│   └── requirements.txt
+│
+├── 📂 frontend/                    # ✅ FRONTEND REACT (COMPLETO)
+│   ├── src/
+│   │   ├── App.jsx                 # Componente principal
+│   │   ├── components/
+│   │   │   ├── ModelOverviewSection.jsx
+│   │   │   ├── ComparePredictionsSection.jsx
+│   │   │   ├── UsersSection.jsx
+│   │   │   ├── AttentionVisualization.jsx
+│   │   │   ├── EmotionChart.jsx
+│   │   │   ├── MetricsPanel.jsx
+│   │   │   ├── ConfusionMatrixGrid.jsx
+│   │   │   └── ... (10 componentes)
+│   │   └── services/
+│   │       └── api.js              # Cliente API
+│   ├── package.json
+│   └── tailwind.config.js
+│
+├── 📂 model-training/              # ✅ ML TRAINING (COMPLETO)
+│   ├── data/
+│   │   ├── train.csv               # 4,900 entradas
+│   │   ├── val.csv                 # 610 entradas
+│   │   └── test.csv                # 614 entradas
+│   │
+│   ├── models/                     # Modelos entrenados
+│   │   ├── checkpoints/            # Fine-tuned completo
+│   │   ├── checkpoints-frozen/     # Feature extraction
+│   │   ├── checkpoints-semi-frozen2/
+│   │   ├── checkpoints-semi-frozen4/
+│   │   └── checkpoints-semi-frozen6/
+│   │
+│   ├── logs/                       # TensorBoard logs
+│   │   ├── finetuned/
+│   │   ├── frozen/
+│   │   └── semi_frozen*/
+│   │
+│   └── download-model/
+│       └── roberta-base-english/   # Modelo RoBERTa base (~500 MB)
+│
+├── 📂 notebooks/                   # Scripts de entrenamiento
+│   ├── train.py                    # Fine-tuning completo
+│   ├── train_frozen.py             # Feature extraction
+│   ├── train_semi_frozen.py        # Semi-frozen (configurable)
+│   └── evaluation.py               # Evaluación y métricas
+│
+├── 📂 data/                        # Datos originales
+│   ├── entradas.csv                # 6,124 entradas etiquetadas
+│   ├── usuarios.csv                # Información de usuarios
+│   └── finetuning/                 # Train/val/test splits
+│
+├── 📂 etl/                         # Pipeline ETL
 │   ├── load_data.py
 │   ├── Dockerfile
 │   └── requirements.txt
-├── model-training/       # 🆕 Entrenamiento de modelos ML
-│   ├── data/             # Train/val/test splits
-│   ├── scripts/          # Scripts de entrenamiento
-│   ├── models/           # Modelos entrenados
-│   ├── logs/             # Logs de TensorBoard
-│   ├── download-model/   # Scripts de descarga de modelos
-│   │   ├── download_roberta.py
-│   │   ├── requirements.txt
-│   │   ├── README.md
-│   │   └── roberta-base-english/  # 🤖 Modelo RoBERTa (~500 MB)
-│   │       ├── vocab.json
-│   │       ├── merges.txt
-│   │       ├── tokenizer.json
-│   │       └── base/
-│   │           └── model.safetensors
-│   └── PLAN_FINETUNING.md
-├── notebooks/            # 🆕 Jupyter notebooks y scripts de prueba
-│   └── test_sentiment.py # Script de prueba de RoBERTa
-├── docker/               # Configuraciones Docker
-└── docker-compose.yml    # Orquestación de servicios
+│
+├── 📂 docker/                      # Configuración Docker
+│   └── db/init/
+│
+├── docker-compose.yml              # Orquestación PostgreSQL + ETL
+└── .venv/                          # Entorno virtual Python
 ```
 
 ---
 
-## 🚀 Instalación y Configuración
+## 🎓 Modelos Entrenados
 
-### 1️⃣ Requisitos Previos
+### **1️⃣ Fine-tuned Completo** (Baseline)
+- **Estrategia:** Todas las capas de RoBERTa + Classification Head entrenables
+- **Parámetros entrenables:** ~125 millones
+- **Epochs:** 3
+- **Accuracy:** ~77-79%
+- **Uso:** Máxima precisión, requiere más recursos
 
-- **Docker Desktop** (para base de datos)
-- **Python 3.10+** (para modelos de ML)
-- **Git** (para clonar el repositorio)
-- **NVIDIA GPU** (opcional, para entrenamiento rápido)
+### **2️⃣ Frozen (Feature Extraction)**
+- **Estrategia:** RoBERTa congelado, solo Classification Head entrenable
+- **Parámetros entrenables:** ~4,608 (0.003%)
+- **Epochs:** 3
+- **Accuracy:** ~65-70%
+- **Uso:** Rápido, menos overfitting, embedded extraction
 
-### 2️⃣ Entorno Virtual de Python
+### **3️⃣ Semi-Frozen (Híbrido)**
+- **Estrategia:** Congelar capas intermedias, entrenar primeras/últimas
+- **Variantes disponibles:**
+  - `semi_frozen2` → Descongela capas 0, 2
+  - `semi_frozen4` → Descongela capas 0, 2, 4
+  - `semi_frozen6` → Descongela capas 0, 2, 4, 6
+- **Accuracy:** Variable según capas (~70-75%)
+- **Uso:** Balance entre precisión y eficiencia
 
-El proyecto utiliza un entorno virtual (`.venv`) para gestionar las dependencias de Python de forma aislada.
+---
 
-**Desde el directorio raíz del proyecto (`c:\MoodJournalAI>`):**
+## 🌐 Endpoints de la API
 
-#### Activar el entorno virtual:
+### **Predicción**
+- `POST /api/predict/single` → Predice emoción de un texto
+- `POST /api/predict/batch` → Predice múltiples textos
+- `POST /api/predict/attention` → Predice con attention weights
+
+### **Evaluación**
+- `GET /api/evaluation/overview` → Resumen de todos los modelos
+- `GET /api/evaluation/test/{model}` → Métricas de un modelo específico
+- `POST /api/evaluation/compare` → Compara predicciones
+
+### **Usuarios**
+- `GET /api/users` → Lista de usuarios
+- `GET /api/users/{id}/entries` → Entradas de un usuario
+- `GET /api/users/{id}/stats` → Estadísticas emocionales
+- `GET /api/users/{id}/timeline` → Timeline de emociones
+
+---
+
+## 📊 Dashboard Frontend
+
+### **Sección 1: Model Overview**
+- Tabla comparativa de **Frozen / Semi-Frozen / Fine-tuned**
+- Métricas: Accuracy, F1-Score, Loss
+- Selector de variantes semi-frozen
+- Indicadores visuales de rendimiento
+
+### **Sección 2: Compare Predictions**
+- Input de texto para clasificar
+- Predicciones side-by-side de 3 modelos
+- Confidence scores con barras de progreso
+- **Visualización de Attention Weights** (heatmap)
+- Permite cambiar entre variantes semi-frozen
+
+### **Sección 3: Users Analysis**
+- Lista de usuarios con preview de estadísticas
+- Gráfica de distribución de emociones por usuario
+- Timeline de emociones a lo largo del tiempo
+- Tabla de entradas recientes con predicciones
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+### **Machine Learning**
+- **Hugging Face Transformers** → RoBERTa, tokenizers
+- **PyTorch** → Training framework
+- **Scikit-learn** → Métricas y evaluación
+- **Datasets** → Data loading
+
+### **Backend**
+- **FastAPI** → API REST moderna
+- **Uvicorn** → ASGI server
+- **Pydantic** → Validación de datos
+- **Python 3.10+**
+
+### **Frontend**
+- **React 19** → UI framework
+- **Vite** → Build tool
+- **TailwindCSS 4** → Styling
+- **Framer Motion** → Animaciones
+- **Recharts** → Gráficos
+- **Lucide React** → Íconos
+- **Axios** → HTTP client
+
+### **Infraestructura**
+- **Docker + Docker Compose** → Contenedores
+- **PostgreSQL 15** → Base de datos
+- **NVIDIA CUDA** → GPU acceleration (opcional)
+
+---
+
+## 🔧 Comandos Útiles
+
+### **Backend**
 ```powershell
+# Activar entorno virtual
 .\.venv\Scripts\Activate
+
+# Instalar dependencias
+pip install -r backend/requirements.txt
+
+# Ejecutar con hot-reload
+python -m uvicorn backend.api.app.main:app --reload
+
+# Ver documentación interactiva
+# http://127.0.0.1:8000/docs
 ```
 
-Una vez activado, verás `(.venv)` al inicio de tu prompt:
-```
-(.venv) c:\MoodJournalAI>
-```
-
-#### Desactivar el entorno virtual:
+### **Frontend**
 ```powershell
-deactivate
+# Instalar dependencias
+cd frontend
+npm install
+
+# Desarrollo
+npm run dev
+
+# Build para producción
+npm run build
+
+# Preview de producción
+npm run preview
 ```
 
-**💡 Nota:** Recuerda activar el entorno virtual antes de instalar dependencias o ejecutar scripts de Python relacionados con el proyecto.
-
-### 3️⃣ Instalación de Docker
-
-1. Descarga Docker Desktop desde [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
-2. Ejecuta el instalador y sigue las instrucciones
-3. Reinicia tu computadora si es necesario
-4. Verifica la instalación:
-   ```powershell
-   docker --version
-   ```
-
-### 4️⃣ Levantar la Base de Datos
-
-Desde la raíz del proyecto:
-
-```bash
-# Construir y levantar los contenedores
-docker-compose up --build
-
-# O en segundo plano
-docker-compose up --build -d
-```
-
-**Servicios disponibles:**
-- PostgreSQL: `localhost:5432`
-  - Usuario: `admin`
-  - Contraseña: `admin`
-  - Base de datos: `moodjournal`
-
-**Comandos útiles de Docker:**
-```bash
-# Ver estado de los contenedores
-docker-compose ps
+### **Docker**
+```powershell
+# Iniciar servicios
+docker-compose up -d
 
 # Ver logs
 docker-compose logs -f
 
-# Detener los contenedores
+# Detener servicios
 docker-compose down
 
-# Conectarse a PostgreSQL
+# Conectar a PostgreSQL
 docker exec -it moodjournal_postgres psql -U admin -d moodjournal
 ```
 
----
+### **Training**
+```powershell
+# Fine-tuning completo
+python notebooks/train.py
 
-## 🤖 Modelo RoBERTa-base para Análisis de Sentimientos
+# Frozen
+python notebooks/train_frozen.py
 
-### 📥 Descarga del Modelo
+# Semi-frozen (editar capas en el script)
+python notebooks/train_semi_frozen.py
 
-El proyecto utiliza el modelo **RoBERTa-base** (inglés) optimizado para análisis de sentimientos.
-
-**Características del modelo:**
-- **Nombre:** `roberta-base`
-- **Parámetros:** ~125 millones
-- **Tamaño:** ~500 MB
-- **Corpus:** BookCorpus, Wikipedia inglés, CC-News, OpenWebText, STORIES
-- **Arquitectura:** 12 capas, 768 dimensiones, 12 attention heads
-- **Idioma:** Inglés (optimizado para los textos del dataset)
-
-**¿Por qué RoBERTa en lugar de BERT?**
-- Mejor rendimiento en benchmarks de NLP
-- Entrenamiento más robusto con más datos
-- Optimizado para tareas de clasificación
-
-#### Pasos para descargar:
-
-```bash
-# 1. Activar entorno virtual
-.\.venv\Scripts\Activate
-
-# 2. Ir a la carpeta de descarga
-cd model-training/download-model
-
-# 3. Instalar dependencias (si no están instaladas)
-pip install -r requirements.txt
-
-# 4. Ejecutar script de descarga
-python download_roberta.py
+# Evaluación
+python notebooks/evaluation.py
 ```
 
-El modelo se descargará en: `model-training/download-model/roberta-base-english/`
+---
 
-**⏱️ Tiempo estimado:** 3-10 minutos (dependiendo de tu conexión)
+## 📈 Próximos Pasos
 
-### 🧪 Probar el Modelo
+### ✅ Completado
+- [x] Fine-tuning de RoBERTa (3 estrategias)
+- [x] Backend FastAPI completo
+- [x] Frontend React con dashboard
+- [x] Sistema de evaluación con métricas
+- [x] Visualización de Attention Weights
+- [x] Análisis por usuarios
+- [x] Comparación de modelos
 
-Una vez descargado RoBERTa, puedes probarlo:
+### 🚧 En Desarrollo
+- [ ] Autenticación de usuarios
+- [ ] Guardar predicciones en base de datos
+- [ ] Export de reportes en PDF
+- [ ] Modo oscuro completo
+- [ ] Gráficos de evolución temporal
 
-```bash
-# Ir a la carpeta de notebooks
-cd notebooks
-
-# Ejecutar script de prueba
-python test_sentiment.py
-```
-
-Este script:
-- ✅ Carga el modelo RoBERTa desde tu carpeta local
-- ✅ Tokeniza una frase de ejemplo en inglés
-- ✅ Genera embeddings (representaciones numéricas de 768 dimensiones)
-- ✅ Muestra las dimensiones del output
-
-**Nota:** RoBERTa base solo genera embeddings. Para clasificar sentimientos en 6 emociones (joy, sadness, fear, anger, love, surprise), necesita fine-tuning.
+### 🎯 Futuro
+- [ ] Deployment en cloud (AWS/GCP/Azure)
+- [ ] Modelo multilenguaje (español)
+- [ ] API pública con rate limiting
+- [ ] App móvil (React Native)
 
 ---
 
-## 🔧 Próximos Pasos
+## 📚 Documentación Adicional
 
-### En Desarrollo
-
-- [ ] **Fine-tuning de RoBERTa** para clasificación de 6 emociones
-- [ ] **Backend API** (FastAPI) para análisis de entradas
-- [ ] **Frontend** (React/Next.js) para interfaz de usuario
-- [ ] **Notebooks de análisis** exploratorio de datos
-- [ ] **Sistema de evaluación** del modelo entrenado
-
-### Roadmap
-
-1. **Fase 1:** Preparación y preprocesamiento de datos de `entradas.csv` (6,124 entradas)
-2. **Fase 2:** Fine-tuning de RoBERTa para 6 emociones personalizadas
-3. **Fase 3:** Desarrollo de API backend
-4. **Fase 4:** Desarrollo de interfaz frontend
-5. **Fase 5:** Integración completa y deployment
-
----
-
-## 📚 Recursos Adicionales
-
-### Documentación por Módulo
-
-- **[SETUP_PC_CASA.md](SETUP_PC_CASA.md)** - 🆕 Guía completa de setup desde cero
-- **model-training/download-model/README.md** - Guía completa de descarga de RoBERTa
-- **model-training/PLAN_FINETUNING.md** - Plan detallado de fine-tuning
-- **etl/README.md** - Pipeline ETL y carga de datos (próximamente)
-- **backend/README.md** - API documentation (próximamente)
-- **frontend/README.md** - UI documentation (próximamente)
-
-### Tecnologías Utilizadas
-
-- **NLP:** Hugging Face Transformers, PyTorch, RoBERTa-base
-- **Base de datos:** PostgreSQL
-- **Containerización:** Docker, Docker Compose
-- **GPU:** NVIDIA CUDA (RTX 4060 optimizado)
-- **Backend (futuro):** FastAPI
-- **Frontend (futuro):** React/Next.js
+- **[GUIA_PROYECTO.md](GUIA_PROYECTO.md)** - Guía paso a paso del proyecto
+- **[SETUP_PC_CASA.md](SETUP_PC_CASA.md)** - Setup desde cero
+- **[PLAN_FINETUNING.md](PLAN_FINETUNING.md)** - Teoría y plan de fine-tuning
 
 ---
 
 ## 🤝 Contribuciones
 
-Este proyecto está en desarrollo activo. Las contribuciones son bienvenidas.
+Este proyecto es parte de un trabajo académico. Las contribuciones son bienvenidas.
 
 ---
 
@@ -262,4 +383,6 @@ Este proyecto está en desarrollo activo. Las contribuciones son bienvenidas.
 
 ## 👤 Autor
 
-Asier Castrillejo - MoodJournalAI Project
+**Asier Castrillejo**  
+MoodJournalAI Project - 2025  
+*Sistema de clasificación de emociones usando RoBERTa fine-tuning*
