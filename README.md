@@ -28,7 +28,6 @@
 - PostgreSQL con Docker Compose
 - Pipeline ETL para carga de datos
 - 6,124+ entradas de diario etiquetadas
-- Optimizado para GPU (RTX 4060 8GB VRAM)
 
 ---
 
@@ -88,9 +87,6 @@ Abre tu navegador en **`http://localhost:5173`** y deberías ver:
 ```
 MoodJournalAI/
 ├── 📄 README.md                    # Este archivo
-├── 📄 GUIA_PROYECTO.md             # Guía de desarrollo paso a paso
-├── 📄 SETUP_PC_CASA.md             # Setup desde cero en un PC nuevo
-├── 📄 PLAN_FINETUNING.md           # Teoría y plan de fine-tuning
 │
 ├── 📂 backend/                     # ✅ BACKEND FASTAPI (COMPLETO)
 │   ├── api/
