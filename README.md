@@ -7,10 +7,10 @@
 ### 🎯 Características principales
 
 #### 🤖 **Modelos de ML Entrenados**
-- **RoBERTa Fine-tuned Completo** → Accuracy: ~77-79%
-- **RoBERTa Frozen (Feature Extraction)** → Accuracy: ~65-70%
-- **RoBERTa Semi-Frozen (Capas 0, 2, 4, 6)** → Diferentes niveles de aprendizaje
-- **Visualización de Attention Weights** para interpretabilidad
+- **RoBERTa Fine-tuned Completo** 
+- **RoBERTa Frozen (Feature Extraction)** 
+- **RoBERTa Semi-Frozen (Capas 0, 2, 4, 6)** 
+- **Visualización de Attention Weights** 
 
 #### 💻 **Aplicación Full-Stack Funcional**
 - **Frontend React** con Vite + TailwindCSS + Framer Motion
@@ -33,8 +33,6 @@
 ---
 
 ## 🚀 Guía de Arranque Rápida
-
-### ¿Primera vez? → [Ver SETUP_PC_CASA.md](SETUP_PC_CASA.md)
 
 Para ejecutar la aplicación completa, necesitas **3 servicios en paralelo**:
 
