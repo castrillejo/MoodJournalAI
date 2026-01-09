@@ -167,13 +167,11 @@ MoodJournalAI/
 
 ### **1️⃣ Fine-tuned Completo** (Baseline)
 - **Estrategia:** Todas las capas de RoBERTa + Classification Head entrenables
-- **Parámetros entrenables:** ~125 millones
 - **Epochs:** 3
 - **Accuracy:** ~90.9%
 
 ### **2️⃣ Frozen (Feature Extraction)**
 - **Estrategia:** RoBERTa congelado, solo Classification Head entrenable
-- **Parámetros entrenables:** ~4,608 (0.003%)
 - **Epochs:** 3
 - **Accuracy:** 48.9%
 
@@ -190,20 +188,15 @@ MoodJournalAI/
 ## 🌐 Endpoints de la API
 
 ### **Predicción**
-- `POST /api/predict/single` → Predice emoción de un texto
-- `POST /api/predict/batch` → Predice múltiples textos
-- `POST /api/predict/attention` → Predice con attention weights
+- `POST /api/predict/attention` → Predice emoción con attention weights (permite elegir modelo: finetuned/frozen/semi_frozenX)
+- `POST /api/predict/compare/attention` → Compara predicciones de 3 modelos (frozen, semi, finetuned) con attention
 
 ### **Evaluación**
-- `GET /api/evaluation/overview` → Resumen de todos los modelos
-- `GET /api/evaluation/test/{model}` → Métricas de un modelo específico
-- `POST /api/evaluation/compare` → Compara predicciones
+- `GET /api/evaluation/overview` → Resumen completo de todos los modelos con métricas y variantes semi-frozen
 
 ### **Usuarios**
-- `GET /api/users` → Lista de usuarios
-- `GET /api/users/{id}/entries` → Entradas de un usuario
-- `GET /api/users/{id}/stats` → Estadísticas emocionales
-- `GET /api/users/{id}/timeline` → Timeline de emociones
+- `GET /api/users/search?q=query&limit=5` → Búsqueda de usuarios por nombre 
+- `GET /api/users/{user_id}/stats` → Estadísticas completas del usuario (análisis emocional + gráficos)
 
 ---
 
@@ -212,21 +205,19 @@ MoodJournalAI/
 ### **Sección 1: Model Overview**
 - Tabla comparativa de **Frozen / Semi-Frozen / Fine-tuned**
 - Métricas: Accuracy, F1-Score, Loss
-- Selector de variantes semi-frozen
-- Indicadores visuales de rendimiento
+- Permite cambiar entre variantes semi-frozen
 
 ### **Sección 2: Compare Predictions**
 - Input de texto para clasificar
 - Predicciones side-by-side de 3 modelos
 - Confidence scores con barras de progreso
-- **Visualización de Attention Weights** (heatmap)
-- Permite cambiar entre variantes semi-frozen
+- **Visualización de Attention Weights**
 
 ### **Sección 3: Users Analysis**
-- Lista de usuarios con preview de estadísticas
+- Barra de busqueda de usuarios
 - Gráfica de distribución de emociones por usuario
-- Timeline de emociones a lo largo del tiempo
-- Tabla de entradas recientes con predicciones
+- Emoción principal
+- Diferentes estadísticas complementarias sobre el usuario
 
 ---
 
@@ -322,53 +313,6 @@ python notebooks/train_semi_frozen.py
 # Evaluación
 python notebooks/evaluation.py
 ```
-
----
-
-## 📈 Próximos Pasos
-
-### ✅ Completado
-- [x] Fine-tuning de RoBERTa (3 estrategias)
-- [x] Backend FastAPI completo
-- [x] Frontend React con dashboard
-- [x] Sistema de evaluación con métricas
-- [x] Visualización de Attention Weights
-- [x] Análisis por usuarios
-- [x] Comparación de modelos
-
-### 🚧 En Desarrollo
-- [ ] Autenticación de usuarios
-- [ ] Guardar predicciones en base de datos
-- [ ] Export de reportes en PDF
-- [ ] Modo oscuro completo
-- [ ] Gráficos de evolución temporal
-
-### 🎯 Futuro
-- [ ] Deployment en cloud (AWS/GCP/Azure)
-- [ ] Modelo multilenguaje (español)
-- [ ] API pública con rate limiting
-- [ ] App móvil (React Native)
-
----
-
-## 📚 Documentación Adicional
-
-- **[GUIA_PROYECTO.md](GUIA_PROYECTO.md)** - Guía paso a paso del proyecto
-- **[SETUP_PC_CASA.md](SETUP_PC_CASA.md)** - Setup desde cero
-- **[PLAN_FINETUNING.md](PLAN_FINETUNING.md)** - Teoría y plan de fine-tuning
-
----
-
-## 🤝 Contribuciones
-
-Este proyecto es parte de un trabajo académico. Las contribuciones son bienvenidas.
-
----
-
-## 📄 Licencia
-
-[Especificar licencia]
-
 ---
 
 ## 👤 Autor
