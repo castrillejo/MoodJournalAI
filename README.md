@@ -33,6 +33,9 @@
 
 ## 🚀 Guía de Arranque Rápida
 
+> **💻 ¿Necesitas transferir el proyecto a otro PC?**  
+> 👉 **[Ver GUIA_MIGRACION_PORTATIL.md](GUIA_MIGRACION_PORTATIL.md)** - Guía completa para migrar vía pendrive
+
 Para ejecutar la aplicación completa, necesitas **3 servicios en paralelo**:
 
 ### **Terminal 1: Base de Datos** 🗄️
