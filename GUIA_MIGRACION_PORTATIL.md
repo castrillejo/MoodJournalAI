@@ -267,35 +267,3 @@ npm run dev
 
 # 7. Abrir http://localhost:5173
 ```
-
----
-
-## ⏱️ Tiempo Total Estimado
-
-- **Copia al pendrive:** 10-30 min (depende del USB)
-- **Copia al portátil:** 10-30 min
-- **Setup Python:** 5-10 min
-- **Setup npm:** 3-5 min
-- **Verificación:** 5 min
-
-**TOTAL:** ~40-80 minutos
-
----
-
-## 💡 Tip para la Presentación
-
-Para evitar problemas el día de la presentación:
-
-1. **Haz este proceso 2-3 días antes** para tener margen de error
-2. **Deja el proyecto funcionando** en el portátil antes de apagarlo
-3. El día de la presentación solo necesitas:
-   - Abrir Docker Desktop (esperar a que arranque)
-   - Terminal 1: `python -m uvicorn backend.api.app.main:app --reload`
-   - Terminal 2: `npm run dev` (desde frontend/)
-   - Abrir navegador en `http://localhost:5173`
-
-**Tiempo de arranque el día de la presentación:** ~2-3 minutos
-
----
-
-**¡Buena suerte con la presentación! 🚀**
