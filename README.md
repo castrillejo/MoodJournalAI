@@ -316,7 +316,169 @@ python notebooks/train_semi_frozen.py
 # Evaluación
 python notebooks/evaluation.py
 ```
+
 ---
+
+## 🎓 Cómo Entrenar un Modelo Nuevo
+
+Si quieres entrenar un nuevo modelo desde cero usando el modelo base de RoBERTa, sigue estos pasos:
+
+### **📋 Prerequisitos**
+
+Asegúrate de tener:
+
+1. ✅ **Modelo base RoBERTa descargado**
+   - Ubicación: `model-training/download-model/roberta-base-english/base/`
+   - Archivos: `model.safetensors`, `config.json`, tokenizer files
+
+2. ✅ **Datos preparados** en splits train/val/test
+   - Ubicación: `data/finetuning/`
+   - Archivos: `train.csv`, `val.csv`, `test.csv`
+   - Columnas requeridas: `texto_diario`, `emocion_principal`
+
+3. ✅ **Entorno virtual activado** con dependencias instaladas
+   ```powershell
+   .\.venv\Scripts\Activate
+   pip install -r backend/requirements.txt
+   ```
+
+---
+
+### **🚀 Paso 1: Entrenar el Modelo**
+
+Tienes 3 opciones de entrenamiento:
+
+#### **Opción A: Fine-tuning Completo** (Recomendado)
+Entrena todas las capas del modelo para máxima precisión.
+
+```powershell
+# Desde la raíz del proyecto
+python notebooks/train.py
+```
+
+**Interacción:**
+```
+Iniciando configuración de Fine-Tuning...
+📂 Cargando modelo base desde: model-training\download-model\roberta-base-english\base
+Modelo y Tokenizer cargados.
+Datos cargados: 4899 train, 612 validation
+Tokenizando datos...
+
+¿Quieres comenzar el entrenamiento AHORA? (s/n): s
+```
+
+**Responde `s`** para iniciar el entrenamiento.
+
+---
+
+#### **Opción B: Frozen (Feature Extraction)**
+Solo entrena el classification head, RoBERTa permanece congelado.
+
+```powershell
+python notebooks/train_frozen.py
+```
+
+Más rápido pero menor precisión (~48-50% accuracy).
+
+---
+
+#### **Opción C: Semi-Frozen**
+Entrena selectivamente ciertas capas de RoBERTa.
+
+```powershell
+python notebooks/train_semi_frozen.py
+```
+
+Necesitas editar el script para elegir qué capas descongelar (0, 2, 4, 6, etc.).
+
+---
+
+### **⏱️ Duración del Entrenamiento**
+
+- **Con GPU (NVIDIA CUDA):** 15-30 minutos (3 epochs)
+- **Con CPU:** 2-4 horas (puede ser más lento)
+
+El script detecta automáticamente si tienes GPU disponible y usa fp16 para acelerar.
+
+---
+
+**Archivos generados:**
+
+```
+model-training/
+├── models/
+│   └── checkpoints/              # Checkpoints por epoch
+│       ├── checkpoint-306/
+│       ├── checkpoint-612/
+│       └── checkpoint-918/
+│
+├── logs/                         # TensorBoard logs
+│   └── events.out.tfevents...
+│
+└── download-model/
+    └── roberta-base-english/
+        └── finetuned-emotion/    # 🎯 MODELO FINAL
+            ├── config.json
+            ├── model.safetensors
+            ├── training_args.bin
+            └── ... (archivos del modelo)
+```
+
+---
+
+### **📊 Paso 2: Evaluar el Modelo**
+
+Una vez entrenado, evalúa el modelo en el test set:
+
+```powershell
+python notebooks/evaluation.py
+```
+
+**Output esperado:**
+
+```
+Se está haciendo la evaluación del modelo: finetuned...
+OK. Guardado: backend\api\app\assets\evaluation\report_finetuned.json
+
+Se está haciendo la evaluación del modelo: frozen...
+OK. Guardado: backend\api\app\assets\evaluation\report_frozen.json
+
+Se está haciendo la evaluación de los modelos: semi_frozen2/4/6...
+OK. Guardado: backend\api\app\assets\evaluation\report_semi_frozen.json
+```
+
+**Archivos generados:**
+
+```
+backend/api/app/assets/evaluation/
+├── report_finetuned.json    # Métricas del modelo fine-tuned
+├── report_frozen.json        # Métricas del modelo frozen
+└── report_semi_frozen.json   # Métricas de variantes semi-frozen
+```
+
+Estos JSON son **automáticamente cargados por la API** para mostrar las métricas en el frontend.
+
+---
+
+
+### **✅ Checklist de Entrenamiento**
+
+- [ ] Modelo base RoBERTa descargado en `/base/`
+- [ ] Datos en `data/finetuning/` (train.csv, val.csv, test.csv)
+- [ ] Entorno virtual activado
+- [ ] Dependencias instaladas
+- [ ] Ejecutado `python notebooks/train.py` → Respondido 's'
+- [ ] Entrenamiento completado sin errores
+- [ ] Modelo guardado en `finetuned-emotion/`
+- [ ] Ejecutado `python notebooks/evaluation.py`
+- [ ] Generados JSONs en `backend/api/app/assets/evaluation/`
+- [ ] Backend reiniciado
+- [ ] Métricas visibles en frontend
+
+---
+
+**¡Listo! Ya tienes un modelo nuevo entrenado y funcionando. 🎉**
+**Si ya entrenaste modelos con anterioridad, tener cuidado con archivos duplicados o con generar nuevos con nuevos nombres y rutas**
 
 ## 👤 Autor
 
