@@ -33,7 +33,7 @@ const PredictionCard = ({ title, result }) => {
                 </div>
 
                 <div className="text-right">
-                    <div className="text-xs text-gray-500">Confidence</div>
+                    <div className="text-xs text-gray-500">Confianza</div>
                     <div className="text-lg font-bold text-gray-800">{pct(confidence)}</div>
                 </div>
             </div>

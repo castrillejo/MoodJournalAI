@@ -21,7 +21,7 @@ const AttentionVisualization = ({ attention, emotion }) => {
             {/* Highlighted Text */}
             <div className="bg-slate-950/40 rounded-xl p-5 border border-slate-800">
                 <p className="text-sm font-medium text-slate-300 mb-3">
-                    💡 Highlighted Text (darker = more important)
+                    💡 Texto destacado
                 </p>
                 <div className="text-lg leading-relaxed flex flex-wrap gap-1">
                     {tokens.map((token, index) => {

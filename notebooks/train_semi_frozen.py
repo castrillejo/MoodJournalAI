@@ -50,11 +50,9 @@ def compute_metrics(eval_pred):
     return {"accuracy": acc, "f1": f1, "precision": precision, "recall": recall}
 
 def freeze_semi_frozen(model, unfreeze_last_n_layers: int):
-    # Congela TODO roberta
     for p in model.roberta.parameters():
         p.requires_grad = False
 
-    # Descongela últimas N capas del encoder
     layers = model.roberta.encoder.layer
     total_layers = len(layers)
     n = max(0, min(unfreeze_last_n_layers, total_layers))
@@ -64,7 +62,6 @@ def freeze_semi_frozen(model, unfreeze_last_n_layers: int):
             for p in layer.parameters():
                 p.requires_grad = True
 
-    # Classifier siempre entrenable
     for p in model.classifier.parameters():
         p.requires_grad = True
 
@@ -75,7 +72,7 @@ def train_variant(unfreeze_n: int, tokenizer, tokenized_datasets, data_collator)
     output_dir = os.path.join(OUTPUT_ROOT, f"checkpoints-{variant_name}")
     log_dir = os.path.join(LOG_ROOT, f"{variant_name}")
 
-    print(f"\n🏋️ Entrenando {variant_name} (descongelando últimas {unfreeze_n} capas)...")
+    print(f"\nEntrenando {variant_name} (descongelando últimas {unfreeze_n} capas)...")
 
     model = AutoModelForSequenceClassification.from_pretrained(
         BASE_MODEL_DIR,
@@ -120,17 +117,15 @@ def train_variant(unfreeze_n: int, tokenizer, tokenized_datasets, data_collator)
     trainer.train()
     trainer.save_model(final_model_dir)
 
-    print(f"✅ Guardado: {final_model_dir}")
+    print(f"Guardado: {final_model_dir}")
 
 def main():
-    # 1) Cargar dataset (una vez)
     data_files = {
         "train": os.path.join(DATA_DIR, "train.csv"),
         "validation": os.path.join(DATA_DIR, "val.csv"),
     }
     dataset = load_dataset("csv", data_files=data_files)
 
-    # 2) Tokenizer (una vez)
     tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_DIR)
 
     def tokenize_function(examples):
@@ -144,11 +139,10 @@ def main():
     tokenized_datasets = dataset.map(tokenize_function, batched=True)
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
-    # 3) Entrenar variantes (2,4,6)
     for n in UNFREEZE_VARIANTS:
         train_variant(n, tokenizer, tokenized_datasets, data_collator)
 
-    print("\n🎉 Entrenamiento de variantes semi-frozen completado.")
+    print("\nEntrenamiento de variantes semi-frozen completado.")
 
 if __name__ == "__main__":
     main()

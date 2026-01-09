@@ -32,10 +32,7 @@ const TextInput = ({ onAnalyze, isLoading }) => {
                         <Sparkles className="w-6 h-6 text-purple-600" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-800">Write a short diary entry</h2>
-                        <p className="text-gray-600">
-                            We will compare three models and always show attention weights.
-                        </p>
+                        <h2 className="text-2xl font-bold text-gray-800">Escribe una breve entrada de prueba</h2>
                     </div>
                 </div>
 
@@ -44,7 +41,7 @@ const TextInput = ({ onAnalyze, isLoading }) => {
                         <textarea
                             value={text}
                             onChange={(e) => setText(e.target.value.slice(0, 512))}
-                            placeholder="Write your text in English here... (e.g., I feel amazing today!)"
+                            placeholder="Escribe tu texto en inglés aquí... (e.g., I feel amazing today!)"
                             className="w-full px-6 py-4 text-lg border-2 border-gray-200 rounded-2xl focus:border-purple-400 focus:ring-4 focus:ring-purple-100 outline-none resize-none transition-all duration-200 shadow-sm hover:shadow-md"
                             rows="5"
                             disabled={isLoading}
@@ -56,7 +53,7 @@ const TextInput = ({ onAnalyze, isLoading }) => {
 
                     <div className="flex items-center justify-between flex-wrap gap-4">
                         <p className="text-sm text-gray-500">
-                            Tip: try a longer sentence with feelings, causes and context.
+
                         </p>
 
                         <motion.button
@@ -69,12 +66,12 @@ const TextInput = ({ onAnalyze, isLoading }) => {
                             {isLoading ? (
                                 <>
                                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                    Analyzing...
+                                    Analizando...
                                 </>
                             ) : (
                                 <>
                                     <Send className="w-5 h-5" />
-                                    Compare Predictions
+                                    Comparando Predicciones
                                 </>
                             )}
                         </motion.button>
@@ -83,7 +80,7 @@ const TextInput = ({ onAnalyze, isLoading }) => {
 
                 {/* Quick Examples */}
                 <div className="mt-7">
-                    <p className="text-sm font-medium text-gray-600 mb-3">💡 Quick Examples:</p>
+                    <p className="text-sm font-medium text-gray-600 mb-3">💡 Ejemplos rápidos:</p>
                     <div className="flex flex-wrap gap-2">
                         {examples.map((ex, idx) => (
                             <motion.button

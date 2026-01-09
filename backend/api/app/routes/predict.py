@@ -46,35 +46,6 @@ def _predict_attention_for(model_key: str, text: str) -> dict:
         },
     }
 
-
-@router.post("/predict", response_model=PredictionResponse)
-async def predict_emotion(request: PredictionRequest):
-    """
-    Predice la emoción (por defecto finetuned, como antes).
-    """
-    try:
-        logger.info(f"Predicción solicitada: '{request.text[:50]}...'")
-
-        classifier = EmotionClassifier("finetuned")
-        result = classifier.predict(request.text)
-        all_scores = _build_scores(result)
-
-        logger.info(f"Predicción: {result['predicted_emotion']} ({result['confidence']:.2%})")
-
-        return PredictionResponse(
-            predicted_emotion=result["predicted_emotion"],
-            confidence=result["confidence"],
-            all_scores=all_scores
-        )
-
-    except FileNotFoundError as e:
-        logger.error(f"Modelo no encontrado: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-    except Exception as e:
-        logger.error(f"Error en predicción: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
 @router.post("/predict/attention")
 async def predict_emotion_with_attention(request: PredictionWithModelRequest):
     """

@@ -19,9 +19,9 @@ const ModelOverviewSection = ({ overview, selectedSemi, setSelectedSemi }) => {
         <section id="overview" className="scroll-mt-28">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                 <div className="max-w-6xl mx-auto mb-6">
-                    <h2 className="text-3xl font-bold text-gray-900">Model Overview</h2>
+                    <h2 className="text-3xl font-bold text-gray-900">Evaluacion del Model</h2>
                     <p className="text-gray-600 mt-1">
-                        Evaluation metrics for Fine-tuned (full), Frozen and Semi-frozen (2/4/6).
+                        Metricas de evaluacion para el modelo fine-tuned basado en RoBERTa.
                     </p>
                 </div>
 
@@ -33,8 +33,7 @@ const ModelOverviewSection = ({ overview, selectedSemi, setSelectedSemi }) => {
                 {/* 2) Fine-tuned metrics (full width) */}
                 <div className="max-w-6xl mx-auto mt-6">
                     <MetricsPanel
-                        title="Fine-tuned (best model)"
-                        subtitle="Includes confusion matrix + per-class metrics"
+                        title="Fine-tuned (modelo completamente entrenado)"
                         metrics={fin?.metrics}
                         perClass={fin?.per_class}
                     />
@@ -43,8 +42,8 @@ const ModelOverviewSection = ({ overview, selectedSemi, setSelectedSemi }) => {
                 {/* 3) Frozen + Semi-frozen (2 columns) */}
                 <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
                     <MetricsPanel
-                        title="Frozen-classifier"
-                        subtitle="Encoder frozen, classifier trained"
+                        title="Congelado"
+                        subtitle="Encoder congelado, clasificador entrenado"
                         metrics={frozen?.metrics}
                         perClass={frozen?.per_class}
                         compact
@@ -53,9 +52,9 @@ const ModelOverviewSection = ({ overview, selectedSemi, setSelectedSemi }) => {
                     <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
                         <div className="flex items-start justify-between flex-wrap gap-4">
                             <div>
-                                <h3 className="text-lg font-bold text-gray-900">Semi-frozen</h3>
+                                <h3 className="text-lg font-bold text-gray-900">Semicongelado</h3>
                                 <p className="text-sm text-gray-600 mt-1">
-                                    Switch between unfreezing 2 / 4 / 6 last layers.
+                                    Cambia entre los modelos semicongelados con 2, 4 y 6 capas descongeladas.
                                 </p>
                             </div>
 
@@ -65,14 +64,14 @@ const ModelOverviewSection = ({ overview, selectedSemi, setSelectedSemi }) => {
                         <div className="mt-5">
                             {semi ? (
                                 <MetricsPanel
-                                    title={`Selected: ${selectedSemi}`}
+                                    title={`Modelo seleccionado: ${selectedSemi}`}
                                     metrics={semi?.metrics}
                                     perClass={semi?.per_class}
                                     compact
                                 />
                             ) : (
                                 <p className="text-sm text-gray-600">
-                                    No semi-frozen data found for <b>{selectedSemi}</b>.
+                                    No se ha encontrado datos para el modelo <b>{selectedSemi}</b>.
                                 </p>
                             )}
                         </div>

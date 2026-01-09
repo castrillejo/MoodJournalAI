@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import predict, evaluation
+from .routes import predict, evaluation, users
 import logging
 
 # Configurar logging
@@ -38,6 +38,12 @@ app.include_router(
     evaluation.router,
     prefix="/api",
     tags=["Evaluation"]
+)
+
+app.include_router(
+    users.router,
+    prefix="/api",
+    tags=["Users"]
 )
 
 @app.get("/")
